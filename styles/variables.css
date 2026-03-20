@@ -1,0 +1,8 @@
+:root {
+  --background: rgb(255, 246, 236);
+  --on-background: rgb(10, 7, 7);
+  --font-stack: "Kode Mono", monospace;
+  --primary: rgb(209 196 233);
+  --on-primary: rgb(10, 7, 7);
+  --outline: rgb(10, 7, 7);
+}
