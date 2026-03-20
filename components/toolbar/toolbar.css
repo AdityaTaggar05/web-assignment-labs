@@ -14,14 +14,12 @@
   padding: 8px 8px;
 }
 
-.spacer {
-  flex-grow: 1;
+.tool:active {
+  border-left: 3px solid var(--outline);
+  border-top: 3px solid var(--outline);
 }
 
-.toolbar #collapse {
-  background-color: var(--background);
-  color: var(--on-background);
-  border: none;
-  border-top: 1px solid var(--outline);
-  padding: 8px 8px;
+.spacer {
+  flex-grow: 1;
+  border-bottom: 1px solid var(--outline);
 }
