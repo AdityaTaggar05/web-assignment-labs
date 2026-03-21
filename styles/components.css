@@ -28,20 +28,25 @@
   border-color: var(--outline);
 }
 
+input {
+  border: solid var(--outline);
+  border-radius: 3px;
+  border-width: 1.5px 2.75px 2.75px 1.5px;
+}
+
+input:active {
+  border-width: 2.75px 1.5px 1.5px 2.75px;
+}
+
 input[type="checkbox"] {
   appearance: none;
   position: relative;
   width: 1em;
   height: 1em;
   padding: 6px;
-  border-radius: 2.75px;
-  border: solid var(--outline);
-  border-width: 1.5px 2.75px 2.75px 1.5px;
-  vertical-align: -4px;
-}
 
-input[type="checkbox"]:active {
-  border-width: 2.75px 1.5px 1.5px 2.75px;
+  /* Taking the box to the text baseline */
+  vertical-align: -4px;
 }
 
 input[type="checkbox"]::before {
@@ -54,4 +59,9 @@ input[type="checkbox"]::before {
 
 input[type="checkbox"]:checked::before {
   visibility: visible;
+}
+
+input[type="color"] {
+  inline-size: 2em; /* Sets the width */
+  block-size: 2em; /* Sets the height */
 }
