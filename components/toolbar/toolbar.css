@@ -4,17 +4,6 @@
   width: 4vw;
   border: none;
   border-right: 2px solid var(--outline);
-
-  opacity: 0;
-  transform: translateX(-4vw);
-  transition: all 0.3s ease;
-  pointer-events: none;
-}
-
-.toolbar.active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
 }
 
 .tool {
@@ -38,16 +27,6 @@
 
   background-color: var(--on-background);
   color: var(--background);
-}
-
-.tool .corner {
-  position: absolute;
-  right: 2px;
-
-  height: 6px;
-  width: 6px;
-  background: var(--foreground);
-  clip-path: polygon(100% 100%, 100% 0, 0 100%);
 }
 
 .spacer {

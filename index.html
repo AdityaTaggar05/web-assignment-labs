@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="./styles/components.css" />
     <link rel="stylesheet" href="./components/header/header.css" />
     <link rel="stylesheet" href="./components/toolbar/toolbar.css" />
+    <link rel="stylesheet" href="./components/sidebar/sidebar.css" />
   </head>
   <body>
     <header>
@@ -38,23 +39,21 @@
       </div>
     </header>
     <div class="main-layout">
-      <div class="toolbar active">
-        <button class="tool active" data-action="brush">
-          <i class="fa-solid fa-brush"></i>
-        </button>
-        <button class="tool" data-action="square">
-          <i class="fa-regular fa-square"></i>
-          <div class="corner"></div>
-        </button>
-        <button class="tool" data-action="circle">
-          <i class="fa-regular fa-circle"></i>
-        </button>
-        <div class="spacer"></div>
-        <button class="tool" data-action="collapse">
-          <i class="fa-solid fa-bars"></i>
-        </button>
+      <div class="content">
+        <div class="toolbar">
+          <button class="tool active" data-action="brush">
+            <i class="fa-solid fa-brush"></i>
+          </button>
+          <button class="tool" data-action="square">
+            <i class="fa-regular fa-square"></i>
+          </button>
+          <button class="tool" data-action="circle">
+            <i class="fa-regular fa-circle"></i>
+          </button>
+        </div>
+        <div class="canvas"></div>
       </div>
-      <div class="canvas"></div>
+      <div class="sidebar"></div>
     </div>
 
     <script src="./components/toolbar/toolbar.js"></script>

@@ -19,6 +19,12 @@ body {
   justify-items: stretch;
 }
 
+.content {
+  display: flex;
+  justify-items: stretch;
+  flex-grow: 1;
+}
+
 .canvas {
   background: #ffffff;
   flex-grow: 1;
