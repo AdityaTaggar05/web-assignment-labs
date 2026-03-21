@@ -12,10 +12,15 @@ const state = {
   strokeWidth: 5,
 };
 const toolManager = new ToolManager(state);
-setupCanvas(canvas, toolManager);
+const ctx = setupCanvas(canvas, toolManager);
 
+// Registering Event handling
 const tools = document.querySelectorAll(".tool");
 setupToolbarEvents(tools, toolManager);
+
+document.getElementById("clear-btn").addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
 
 const pencil = new PencilTool(state);
 toolManager.setTool(pencil);
