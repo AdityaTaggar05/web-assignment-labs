@@ -20,13 +20,15 @@
     />
 
     <!-- Load Local CSS Files -->
-    <link rel="stylesheet" href="./styles/base.css" />
-    <link rel="stylesheet" href="./styles/variables.css" />
-    <link rel="stylesheet" href="./styles/components.css" />
-    <link rel="stylesheet" href="./components/header/header.css" />
-    <link rel="stylesheet" href="./components/toolbar/toolbar.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/components.css" />
+    <link rel="stylesheet" href="components/header/header.css" />
+    <link rel="stylesheet" href="components/toolbar/toolbar.css" />
+    <link rel="stylesheet" href="components/sidebar/sidebar.css" />
   </head>
   <body>
+    <!-- Header -->
     <header>
       <h2>IllusTraitor</h2>
       <div class="actions">
@@ -37,26 +39,61 @@
         <button class="btn btn-filled">Save</button>
       </div>
     </header>
-    <div class="main-layout">
-      <div class="toolbar active">
+
+    <!-- Main Area -->
+    <div class="workspace">
+      <!-- Left Toolbar -->
+      <div class="toolbar">
         <button class="tool active" data-action="brush">
           <i class="fa-solid fa-brush"></i>
         </button>
         <button class="tool" data-action="square">
           <i class="fa-regular fa-square"></i>
-          <div class="corner"></div>
         </button>
         <button class="tool" data-action="circle">
           <i class="fa-regular fa-circle"></i>
         </button>
+        <button class="tool" data-action="text">
+          <i class="fa-solid fa-t"></i>
+        </button>
         <div class="spacer"></div>
-        <button class="tool" data-action="collapse">
-          <i class="fa-solid fa-bars"></i>
+        <button class="tool" data-action="undo">
+          <i class="fa-solid fa-arrow-rotate-left"></i>
+        </button>
+        <button class="tool" data-action="redo">
+          <i class="fa-solid fa-arrow-rotate-right"></i>
         </button>
       </div>
+
+      <!-- Main Canvas -->
       <div class="canvas"></div>
+
+      <!-- Floating Sidebar -->
+      <div class="sidebar active">
+        <button class="btn btn-filled" id="close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Dynamic Content -->
+        <div class="content">
+          <div class="option">
+            <label>Fill:</label>
+            <input type="checkbox" id="fillToggle" />
+          </div>
+          <div class="option">
+            <label>Outline Color:</label>
+            <input type="color" id="outlineColor" />
+          </div>
+          <div class="option">
+            <label>Stroke Width: </label>
+            <input type="range" min="1" max="4" step="1" id="slider" />
+            <span class="tooltip" id="tooltip">50</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="./components/toolbar/toolbar.js"></script>
+    <script src="components/toolbar/toolbar.js"></script>
+    <script src="components/sidebar/sidebar.js"></script>
   </body>
 </html>

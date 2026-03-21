@@ -27,3 +27,45 @@
   color: var(--on-primary);
   border-color: var(--outline);
 }
+
+input {
+  border: solid var(--outline);
+  border-radius: 3px;
+  border-width: 1.5px 2.75px 2.75px 1.5px;
+}
+
+input:active {
+  border-width: 2.75px 1.5px 1.5px 2.75px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 1em;
+  height: 1em;
+  padding: 6px;
+
+  /* Taking the box to the text baseline */
+  vertical-align: -4px;
+}
+
+input[type="checkbox"]::before {
+  content: "✔";
+  position: absolute;
+  right: -1px;
+  top: -0.3em;
+  visibility: hidden;
+}
+
+input[type="checkbox"]:checked::before {
+  visibility: visible;
+}
+
+input[type="color"] {
+  inline-size: 2em; /* Sets the width */
+  block-size: 2em; /* Sets the height */
+}
+
+input[type="range"] {
+  accent-color: var(--secondary);
+}
