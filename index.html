@@ -13,10 +13,10 @@
       rel="stylesheet"
     />
 
-    <!-- Load Google Font Icons -->
+    <!-- Load Font Awesome CDN -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=history"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
 
     <!-- Load Local CSS Files -->
@@ -24,17 +24,39 @@
     <link rel="stylesheet" href="./styles/variables.css" />
     <link rel="stylesheet" href="./styles/components.css" />
     <link rel="stylesheet" href="./components/header/header.css" />
+    <link rel="stylesheet" href="./components/toolbar/toolbar.css" />
   </head>
   <body>
     <header>
       <h2>IllusTraitor</h2>
       <div class="actions">
         <button class="btn">
-          <span class="material-symbols-outlined"> history </span>
+          <i class="fa-solid fa-clock-rotate-left"></i>
         </button>
         <button class="btn">Clear</button>
         <button class="btn btn-filled">Save</button>
       </div>
     </header>
+    <div class="main-layout">
+      <div class="toolbar active">
+        <button class="tool active" data-action="brush">
+          <i class="fa-solid fa-brush"></i>
+        </button>
+        <button class="tool" data-action="square">
+          <i class="fa-regular fa-square"></i>
+          <div class="corner"></div>
+        </button>
+        <button class="tool" data-action="circle">
+          <i class="fa-regular fa-circle"></i>
+        </button>
+        <div class="spacer"></div>
+        <button class="tool" data-action="collapse">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+      <div class="canvas"></div>
+    </div>
+
+    <script src="./components/toolbar/toolbar.js"></script>
   </body>
 </html>
