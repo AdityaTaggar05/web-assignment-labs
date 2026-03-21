@@ -13,19 +13,14 @@ body {
   flex-direction: column;
 }
 
-.main-layout {
+.workspace {
   display: flex;
-  flex-grow: 1;
-  justify-items: stretch;
-}
-
-.content {
-  display: flex;
-  justify-items: stretch;
-  flex-grow: 1;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
 }
 
 .canvas {
   background: #ffffff;
-  flex-grow: 1;
+  flex: 1;
 }
