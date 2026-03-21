@@ -59,12 +59,26 @@
       <div class="canvas"></div>
 
       <!-- Floating Sidebar -->
-      <div class="sidebar">
+      <div class="sidebar active">
         <button class="btn btn-filled" id="close">
           <i class="fa-solid fa-xmark"></i>
         </button>
 
         <!-- Dynamic Content -->
+        <div class="content">
+          <div class="option">
+            <label>Fill</label>
+            <input type="checkbox" id="fillToggle" />
+          </div>
+          <div class="option">
+            <label>Outline Color</label>
+            <input type="color" id="outlineColor" />
+          </div>
+          <div class="option">
+            <label>Stroke Width</label>
+            <input type="range" id="strokeWidth" min="1" max="4" step="1" />
+          </div>
+        </div>
       </div>
     </div>
 
