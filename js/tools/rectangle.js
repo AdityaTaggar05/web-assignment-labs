@@ -41,6 +41,16 @@ export class RectangleTool extends Tool {
     fillToggle.addEventListener("input", (e) => {
       this.state.fill = e.currentTarget.checked;
     });
+
+    const fillPicker = document.querySelector("#fillPicker");
+    fillPicker.addEventListener("input", (e) => {
+      this.state.fillColor = e.target.value;
+    });
+
+    const strokePicker = document.querySelector("#strokePicker");
+    strokePicker.addEventListener("input", (e) => {
+      this.state.strokeColor = e.target.value;
+    });
   }
 
   onMouseDown(e, ctx) {
