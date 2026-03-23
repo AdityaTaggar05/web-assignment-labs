@@ -24,25 +24,28 @@ export class StateManager {
 
   add(element) {
     this.elements.push(element);
+    element.draw(this.ctx);
   }
 
   undo() {
     if (this.elements.length > 0) {
       this.undoneElements.push(this.elements.pop());
+      this.render();
     }
   }
 
   redo() {
     if (this.undoneElements.length > 0) {
       this.elements.push(this.undoneElements.pop());
+      this.render();
     }
   }
 
   render() {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    this.ctx.clearReact(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
     for (const element of this.elements.toReversed()) {
-      element.draw();
+      element.draw(this.ctx);
     }
   }
 }

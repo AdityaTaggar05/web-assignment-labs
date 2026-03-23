@@ -1,6 +1,7 @@
 export class Tool {
-  constructor(state) {
+  constructor(state, stateManager) {
     this.state = state;
+    this.stateManager = stateManager;
   }
 
   getSidebarOptions() { }

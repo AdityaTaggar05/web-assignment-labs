@@ -1,14 +1,18 @@
-import { Tool } from "../tool.js";
+import { RectangleElement } from "../elements/rectangle.js";
+import { Tool } from "./tool.js";
 
 export class RectangleTool extends Tool {
-  constructor() {
-    super({
-      strokeColor: "#000000",
-      fill: false,
-      fillColor: "#000000",
-      strokeWidth: 5,
-      strokeStyle: "solid",
-    });
+  constructor(stateManager) {
+    super(
+      {
+        strokeColor: "#000000",
+        fill: false,
+        fillColor: "#000000",
+        strokeWidth: 5,
+        strokeStyle: "solid",
+      },
+      stateManager,
+    );
     this.isDrawing = false;
   }
 
@@ -83,26 +87,12 @@ export class RectangleTool extends Tool {
   onMouseUp(e, ctx) {
     this.isDrawing = false;
 
-    let width = Math.abs(e.offsetX - this.x);
-    let height = Math.abs(e.offsetY - this.y);
-    let x = Math.min(e.offsetX, this.x);
-    let y = Math.min(e.offsetY, this.y);
+    let element = new RectangleElement(this.state);
+    element.properties.width = Math.abs(e.offsetX - this.x);
+    element.properties.height = Math.abs(e.offsetY - this.y);
+    element.properties.x = Math.min(e.offsetX, this.x);
+    element.properties.y = Math.min(e.offsetY, this.y);
 
-    if (this.state.strokeWidth > 0) {
-      ctx.lineWidth = this.state.strokeWidth;
-      ctx.strokeStyle = this.state.strokeColor;
-      ctx.strokeRect(x, y, width, height);
-    }
-
-    if (this.state.fill) {
-      ctx.fillStyle = this.state.fillColor;
-
-      x += this.state.strokeWidth / 2;
-      width -= this.state.strokeWidth;
-      y += this.state.strokeWidth / 2;
-      height -= this.state.strokeWidth;
-
-      ctx.fillRect(x, y, width, height);
-    }
+    this.stateManager.add(element);
   }
 }

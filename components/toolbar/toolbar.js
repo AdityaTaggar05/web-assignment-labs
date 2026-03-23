@@ -11,10 +11,10 @@ function selectTool(tool, tools) {
   document.querySelector(".sidebar").classList.add("active");
 }
 
-const pencil = new PencilTool();
-const rectangle = new RectangleTool();
-
 export function setupToolbarEvents(tools, stateManager) {
+  const pencil = new PencilTool(stateManager);
+  const rectangle = new RectangleTool(stateManager);
+
   tools.forEach((tool) => {
     tool.addEventListener("click", () => {
       const name = tool.getAttribute("data-action");
