@@ -17,9 +17,7 @@ export function renderSidebar(tool) {
 
     switch (option.type) {
       case "checkbox":
-        data += `
-          <input type="checkbox" id="${option.id}" ${option.value ? "checked" : ""} />
-        `;
+        data += ` <input type="checkbox" id="${option.id}" ${option.value ? "checked" : ""} /> `;
         break;
       case "range":
         data += `
@@ -28,9 +26,7 @@ export function renderSidebar(tool) {
         `;
         break;
       case "color":
-        data += `
-          <input type="color" id="${option.id}" value="${option.value}" />
-        `;
+        data += ` <input type="color" id="${option.id}" value="${option.value}" /> `;
         break;
     }
 

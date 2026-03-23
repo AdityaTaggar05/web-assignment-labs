@@ -10,6 +10,9 @@ export function setupCanvas(canvas, stateManager) {
   // Smooth strokes
   ctx.lineCap = "round";
 
+  // Binding ctx to stateManager
+  stateManager.bindContext(ctx);
+
   canvas.addEventListener("mousedown", (e) => {
     stateManager.currentTool?.onMouseDown(e, ctx);
   });
