@@ -1,5 +1,6 @@
 import { renderSidebar } from "../../js/sidebar.js";
 import { PencilTool } from "../../js/tools/pencil.js";
+import { RectangleTool } from "../../js/tools/rectangle.js";
 
 function selectTool(tool, tools) {
   if (!tool.classList.contains("active")) {
@@ -18,6 +19,10 @@ export function setupToolbarEvents(tools, toolManager) {
       switch (name) {
         case "pencil":
           toolManager.setTool(new PencilTool());
+          selectTool(tool, tools);
+          break;
+        case "rectangle":
+          toolManager.setTool(new RectangleTool());
           selectTool(tool, tools);
           break;
         case "undo":
