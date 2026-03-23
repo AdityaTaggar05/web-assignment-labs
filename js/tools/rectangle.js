@@ -51,6 +51,11 @@ export class RectangleTool extends Tool {
     strokePicker.addEventListener("input", (e) => {
       this.state.strokeColor = e.target.value;
     });
+
+    const strokeWidth = document.querySelector("#strokeWidth");
+    strokeWidth.addEventListener("input", (e) => {
+      this.state.strokeWidth = e.target.value;
+    });
   }
 
   onMouseDown(e, ctx) {
@@ -68,12 +73,24 @@ export class RectangleTool extends Tool {
   onMouseUp(e, ctx) {
     this.isDrawing = false;
 
+    let width = Math.abs(e.offsetX - this.x);
+    let height = Math.abs(e.offsetY - this.y);
+    let x = Math.min(e.offsetX, this.x);
+    let y = Math.min(e.offsetY, this.y);
+
+    ctx.lineWidth = this.state.strokeWidth;
     ctx.strokeStyle = this.state.strokeColor;
-    ctx.strokeRect(this.x, this.y, e.offsetX - this.x, e.offsetY - this.y);
+    ctx.strokeRect(x, y, width, height);
 
     if (this.state.fill) {
       ctx.fillStyle = this.state.fillColor;
-      ctx.fillRect(this.x, this.y, e.offsetX - this.x, e.offsetY - this.y);
+
+      x += this.state.strokeWidth / 2;
+      width -= this.state.strokeWidth;
+      y += this.state.strokeWidth / 2;
+      height -= this.state.strokeWidth;
+
+      ctx.fillRect(x, y, width, height);
     }
   }
 }
