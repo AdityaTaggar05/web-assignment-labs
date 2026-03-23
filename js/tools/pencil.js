@@ -1,11 +1,15 @@
+import { PencilElement } from "../elements/pencil.js";
 import { Tool } from "./tool.js";
 
 export class PencilTool extends Tool {
-  constructor() {
-    super({
-      strokeColor: "#000000",
-      strokeWidth: 5,
-    });
+  constructor(stateManager) {
+    super(
+      {
+        strokeColor: "#000000",
+        strokeWidth: 5,
+      },
+      stateManager,
+    );
     this.isDrawing = false;
   }
 
@@ -46,19 +50,19 @@ export class PencilTool extends Tool {
   onMouseDown(e, ctx) {
     this.isDrawing = true;
 
-    // Apply styling
-    ctx.strokeStyle = this.state.strokeColor;
-    ctx.lineWidth = this.state.strokeWidth;
-
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    this.preview = new PencilElement({ ...this.state });
+    this.preview.properties.x = e.offsetX;
+    this.preview.properties.y = e.offsetY;
+    this.preview.properties.path = [];
+    this.stateManager.add(this.preview);
   }
 
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
+    this.stateManager.undo();
+    this.preview.properties.path.push([e.offsetX, e.offsetY]);
+    this.stateManager.add(this.preview);
   }
 
   onMouseUp(_, __) {
