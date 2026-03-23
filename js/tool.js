@@ -13,8 +13,7 @@ export class Tool {
 }
 
 export class ToolManager {
-  constructor(state) {
-    this.state = state;
+  constructor() {
     this.currentTool = null;
   }
 
@@ -23,7 +22,6 @@ export class ToolManager {
       this.currentTool.onDeselect();
     }
 
-    this.state.currentTool = tool;
     this.currentTool = tool;
 
     if (this.currentTool.onSelect) {

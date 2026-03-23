@@ -1,8 +1,11 @@
 import { Tool } from "../tool.js";
 
 export class PencilTool extends Tool {
-  constructor(state) {
-    super(state);
+  constructor() {
+    super({
+      strokeColor: "#000000",
+      strokeWidth: 5,
+    });
     this.isDrawing = false;
   }
 
