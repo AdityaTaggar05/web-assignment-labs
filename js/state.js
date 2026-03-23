@@ -41,6 +41,12 @@ export class StateManager {
     }
   }
 
+  resizeCanvas(scaleX, scaleY) {
+    // TODO: Add resizing of each element
+
+    this.render();
+  }
+
   render() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     for (const element of this.elements) {
