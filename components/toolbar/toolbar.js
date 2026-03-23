@@ -31,6 +31,9 @@ export function setupToolbarEvents(tools, stateManager) {
         case "undo":
           stateManager.undo();
           break;
+        case "redo":
+          stateManager.redo();
+          break;
       }
 
       renderSidebar(stateManager.currentTool);
