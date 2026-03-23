@@ -14,8 +14,8 @@ export class PencilTool extends Tool {
       <h3>Pencil Tool</h3>
       <div class="option">
         <label>Stroke Width:</label>
-        <input type="range" id="strokeWidth" min="1" max="8" class="slider"/>
-        <div class="tooltip" id="tooltip">1</div>
+        <input type="range" id="strokeWidth" min="1" max="8"/>
+        <div class="tooltip"></div>
       </div>
       <div class="option">
         <label>Stroke Color:</label>
