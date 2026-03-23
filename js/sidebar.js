@@ -12,7 +12,6 @@ export function renderSidebar(tool) {
   `;
 
   for (const option of optionsData.options) {
-    console.log(option);
     let data = ``;
 
     switch (option.type) {

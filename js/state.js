@@ -42,9 +42,8 @@ export class StateManager {
   }
 
   render() {
-    this.ctx.clearReact(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-    for (const element of this.elements.toReversed()) {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    for (const element of this.elements) {
       element.draw(this.ctx);
     }
   }

@@ -44,7 +44,7 @@ export class RectangleTool extends Tool {
           label: "Stroke Color:",
           type: "color",
           id: "strokePicker",
-          value: this.state.strokePicker,
+          value: this.state.strokeColor,
         },
       ],
     };
@@ -87,7 +87,7 @@ export class RectangleTool extends Tool {
   onMouseUp(e, ctx) {
     this.isDrawing = false;
 
-    let element = new RectangleElement(this.state);
+    let element = new RectangleElement({ ...this.state });
     element.properties.width = Math.abs(e.offsetX - this.x);
     element.properties.height = Math.abs(e.offsetY - this.y);
     element.properties.x = Math.min(e.offsetX, this.x);

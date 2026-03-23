@@ -29,7 +29,7 @@ export function setupToolbarEvents(tools, stateManager) {
           selectTool(tool, tools);
           break;
         case "undo":
-          console.log("UNDO");
+          stateManager.undo();
           break;
       }
 
