@@ -77,22 +77,25 @@ export class RectangleTool extends Tool {
 
     this.x = e.offsetX;
     this.y = e.offsetY;
-    ctx.moveTo(this.x, this.y);
+
+    this.preview = new RectangleElement({ ...this.state });
+    this.stateManager.add(this.preview);
   }
 
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
+
+    this.stateManager.undo();
+    this.preview.properties.width = Math.abs(e.offsetX - this.x);
+    this.preview.properties.height = Math.abs(e.offsetY - this.y);
+    this.preview.properties.x = Math.min(e.offsetX, this.x);
+    this.preview.properties.y = Math.min(e.offsetY, this.y);
+    this.stateManager.add(this.preview);
   }
 
   onMouseUp(e, ctx) {
     this.isDrawing = false;
 
-    let element = new RectangleElement({ ...this.state });
-    element.properties.width = Math.abs(e.offsetX - this.x);
-    element.properties.height = Math.abs(e.offsetY - this.y);
-    element.properties.x = Math.min(e.offsetX, this.x);
-    element.properties.y = Math.min(e.offsetY, this.y);
-
-    this.stateManager.add(element);
+    if (e.offsetX == this.x && e.offsetY == this.y) this.stateManager.undo();
   }
 }
