@@ -13,27 +13,37 @@ export class RectangleTool extends Tool {
   }
 
   getSidebarOptions() {
-    return `
-      <h3>Rectangle Tool</h3>
-
-      <div class="option">
-        <label>Fill:</label>
-        <input type="checkbox" id="fillToggle" ${this.state.fill ? "checked" : ""} />
-      </div>
-      <div class="option">
-        <label>Fill Color:</label>
-        <input type="color" id="fillPicker" value="${this.state.fillColor}" />
-      </div>
-      <div class="option">
-        <label>Stroke Width:</label>
-        <input type="range" id="strokeWidth" min="0" max="10" value="${this.state.strokeWidth}" />
-        <div class="tooltip"></div>
-      </div>
-      <div class="option">
-        <label>Stroke Color:</label>
-        <input type="color" id="strokePicker" value="${this.state.strokeColor}" />
-      </div>
-    `;
+    return {
+      name: "Rectangle Tool",
+      options: [
+        {
+          label: "Fill:",
+          type: "checkbox",
+          id: "fillToggle",
+          value: this.state.fill,
+        },
+        {
+          label: "Fill Color:",
+          type: "color",
+          id: "fillPicker",
+          value: this.state.fillColor,
+        },
+        {
+          label: "Stroke Width:",
+          type: "range",
+          id: "strokeWidth",
+          min: 0,
+          max: 10,
+          value: this.state.strokeWidth,
+        },
+        {
+          label: "Stroke Color:",
+          type: "color",
+          id: "strokePicker",
+          value: this.state.strokePicker,
+        },
+      ],
+    };
   }
 
   bindSidebarEvents() {
