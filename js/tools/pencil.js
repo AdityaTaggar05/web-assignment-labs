@@ -51,9 +51,7 @@ export class PencilTool extends Tool {
     this.isDrawing = true;
 
     this.preview = new PencilElement({ ...this.state });
-    this.preview.properties.x = e.offsetX;
-    this.preview.properties.y = e.offsetY;
-    this.preview.properties.path = [];
+    this.preview.properties.path = [e.offsetX, e.offsetY];
     this.stateManager.add(this.preview);
   }
 

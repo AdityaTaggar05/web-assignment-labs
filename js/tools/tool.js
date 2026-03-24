@@ -11,4 +11,5 @@ export class Tool {
   onMouseUp(e, ctx) { }
   onSelect() { }
   onDeselect() { }
+  onUndo() { }
 }

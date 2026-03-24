@@ -8,3 +8,14 @@
   --on-secondary: rgb(209, 196, 233);
   --outline: rgb(10, 7, 7);
 }
+
+[data-theme="dark"] {
+  --background: rgb(32, 26, 42);
+  --on-background: rgb(237, 228, 255);
+  --font-stack: "Kode Mono", monospace;
+  --primary: rgb(98, 80, 130);
+  --on-primary: rgb(237, 228, 255);
+  --secondary: hsl(230, 32%, 58%);
+  --on-secondary: rgb(178, 210, 224);
+  --outline: rgb(72, 62, 88);
+}
