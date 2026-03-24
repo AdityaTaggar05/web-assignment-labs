@@ -7,7 +7,7 @@ export class TextTool extends Tool {
       {
         color: "#000000",
         fontSize: 16,
-        fontFamily: "Arial",
+        fontFamily: "Kode Mono",
       },
       stateManager,
     );
@@ -76,8 +76,8 @@ export class TextTool extends Tool {
     textarea.style.position = "absolute";
     textarea.style.left = `${e.offsetX + rect.left}px`;
     textarea.style.top = `${e.offsetY}px`;
-    textarea.style.fontSize = `${this.state.fontSize || 20}px`;
-    textarea.style.fontFamily = "Arial";
+    textarea.style.fontSize = `${this.state.fontSize}px`;
+    textarea.style.fontFamily = this.state.fontFamily;
     textarea.style.color = this.state.color;
     textarea.style.border = "1px dashed #aaa";
     textarea.style.background = "transparent";
