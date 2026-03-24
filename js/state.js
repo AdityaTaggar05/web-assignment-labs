@@ -41,6 +41,12 @@ export class StateManager {
     }
   }
 
+  clear() {
+    this.elements = [];
+    this.undoneElements = [];
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+  }
+
   resizeCanvas(scaleX, scaleY) {
     // TODO: Add resizing of each element
 
