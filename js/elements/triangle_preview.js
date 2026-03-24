@@ -2,6 +2,7 @@ import { Element } from "./element.js";
 
 export class TrianglePreviewElement extends Element {
   draw(ctx) {
+    console.log("PREVIEWING");
     // Apply styling
     ctx.strokeStyle = this.properties.strokeColor;
     if (this.properties.fill) ctx.fillStyle = this.properties.fillColor;

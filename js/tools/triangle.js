@@ -23,6 +23,8 @@ export class TriangleTool extends Tool {
     if (this.path.length == 0) {
       this.isDrawing = false;
       this.preview = null;
+    } else {
+      this.stateManager.add(this.preview);
     }
   }
 
@@ -91,8 +93,11 @@ export class TriangleTool extends Tool {
       this.path.push([e.offsetX, e.offsetY]);
       this.preview = new TrianglePreviewElement({ ...this.state });
       this.preview.properties.path = this.path;
-      this.stateManager.add(this.preview);
+    } else {
+      this.stateManager.undo();
     }
+
+    this.stateManager.add(this.preview);
   }
 
   onMouseMove(e, ctx) {
