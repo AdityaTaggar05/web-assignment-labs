@@ -3,6 +3,7 @@ import { RectangleElement } from "./elements/rectangle.js";
 import { TriangleElement } from "./elements/triangle.js";
 import { CircleElement } from "./elements/circle.js";
 import { EllipseElement } from "./elements/ellipse.js";
+import { TextElement } from "./elements/text.js";
 
 export class StateManager {
   constructor() {
@@ -58,6 +59,9 @@ export class StateManager {
             break;
           case "ellipse":
             this.elements.push(new EllipseElement(elem.properties));
+            break;
+          case "text":
+            this.elements.push(new TextElement(elem.properties));
             break;
         }
       }

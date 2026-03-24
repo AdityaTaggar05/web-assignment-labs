@@ -4,6 +4,7 @@ import { EllipseTool } from "../../js/tools/ellipse.js";
 import { PencilTool } from "../../js/tools/pencil.js";
 import { RectangleTool } from "../../js/tools/rectangle.js";
 import { TriangleTool } from "../../js/tools/triangle.js";
+import { TextTool } from "../../js/tools/text.js";
 
 function selectTool(tool, tools) {
   if (!tool.classList.contains("active")) {
@@ -20,6 +21,7 @@ export function setupToolbarEvents(tools, stateManager) {
   const circle = new CircleTool(stateManager);
   const ellipse = new EllipseTool(stateManager);
   const triangle = new TriangleTool(stateManager);
+  const text = new TextTool(stateManager);
 
   tools.forEach((tool) => {
     tool.addEventListener("click", () => {
@@ -44,6 +46,10 @@ export function setupToolbarEvents(tools, stateManager) {
           break;
         case "triangle":
           stateManager.setTool(triangle);
+          selectTool(tool, tools);
+          break;
+        case "text":
+          stateManager.setTool(text);
           selectTool(tool, tools);
           break;
         case "undo":
