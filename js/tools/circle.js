@@ -87,11 +87,10 @@ export class CircleTool extends Tool {
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.stateManager.undo();
     this.preview.properties.radius = Math.sqrt(
       Math.pow(this.x - e.offsetX, 2) + Math.pow(this.y - e.offsetY, 2),
     );
-    this.stateManager.add(this.preview);
+    this.stateManager.render();
   }
 
   onMouseUp(e, ctx) {

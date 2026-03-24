@@ -58,9 +58,8 @@ export class PencilTool extends Tool {
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.stateManager.undo();
     this.preview.properties.path.push([e.offsetX, e.offsetY]);
-    this.stateManager.add(this.preview);
+    this.stateManager.render();
   }
 
   onMouseUp(_, __) {

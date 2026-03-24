@@ -87,10 +87,9 @@ export class EllipseTool extends Tool {
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.stateManager.undo();
     this.preview.properties.radiusX = Math.abs(e.offsetX - this.x);
     this.preview.properties.radiusY = Math.abs(e.offsetY - this.y);
-    this.stateManager.add(this.preview);
+    this.stateManager.render();
   }
 
   onMouseUp(e, ctx) {
