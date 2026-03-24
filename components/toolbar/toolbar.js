@@ -1,5 +1,6 @@
 import { renderSidebar } from "../../js/sidebar.js";
 import { CircleTool } from "../../js/tools/circle.js";
+import { EllipseTool } from "../../js/tools/ellipse.js";
 import { PencilTool } from "../../js/tools/pencil.js";
 import { RectangleTool } from "../../js/tools/rectangle.js";
 
@@ -16,6 +17,7 @@ export function setupToolbarEvents(tools, stateManager) {
   const pencil = new PencilTool(stateManager);
   const rectangle = new RectangleTool(stateManager);
   const circle = new CircleTool(stateManager);
+  const ellipse = new EllipseTool(stateManager);
 
   tools.forEach((tool) => {
     tool.addEventListener("click", () => {
@@ -32,6 +34,10 @@ export function setupToolbarEvents(tools, stateManager) {
           break;
         case "circle":
           stateManager.setTool(circle);
+          selectTool(tool, tools);
+          break;
+        case "ellipse":
+          stateManager.setTool(ellipse);
           selectTool(tool, tools);
           break;
         case "undo":
