@@ -85,12 +85,11 @@ export class RectangleTool extends Tool {
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.stateManager.undo();
     this.preview.properties.width = Math.abs(e.offsetX - this.x);
     this.preview.properties.height = Math.abs(e.offsetY - this.y);
     this.preview.properties.x = Math.min(e.offsetX, this.x);
     this.preview.properties.y = Math.min(e.offsetY, this.y);
-    this.stateManager.add(this.preview);
+    this.stateManager.render();
   }
 
   onMouseUp(e, ctx) {

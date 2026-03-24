@@ -103,9 +103,8 @@ export class TriangleTool extends Tool {
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.stateManager.undo();
     this.path[this.path.length - 1] = [e.offsetX, e.offsetY];
-    this.stateManager.add(this.preview);
+    this.stateManager.render();
   }
 
   onMouseUp(e, ctx) {
@@ -115,9 +114,8 @@ export class TriangleTool extends Tool {
       this.path[0][0] == this.path[1][0] &&
       this.path[0][1] == this.path[1][1]
     ) {
-      this.stateManager.undo();
       this.path.pop();
-      this.stateManager.add(this.preview);
+      this.stateManager.render();
     }
 
     if (this.path.length == 3) {
