@@ -1,5 +1,5 @@
 import { Tool } from "./tool.js";
-import { PencilElement } from "../elements/pencil.js";
+import { TrianglePreviewElement } from "../elements/triangle_preview.js";
 import { TriangleElement } from "../elements/triangle.js";
 
 export class TriangleTool extends Tool {
@@ -89,7 +89,7 @@ export class TriangleTool extends Tool {
 
     if (this.path.length == 1) {
       this.path.push([e.offsetX, e.offsetY]);
-      this.preview = new PencilElement({ ...this.state });
+      this.preview = new TrianglePreviewElement({ ...this.state });
       this.preview.properties.path = this.path;
       this.stateManager.add(this.preview);
     }
