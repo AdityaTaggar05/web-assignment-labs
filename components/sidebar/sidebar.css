@@ -53,3 +53,36 @@
   border-radius: 4px;
   border: 1.5px solid var(--outline);
 }
+
+.sidebar .theme-toggle {
+  /* Position */
+  position: absolute;
+  bottom: 1vh;
+  right: 21vw;
+
+  /* Sizing */
+  width: 5vw;
+
+  /* UI */
+  background: var(--background);
+  border: 2px solid var(--outline);
+  border-radius: 6px;
+  cursor: pointer;
+
+  /* Layout */
+  display: inline-flex;
+}
+
+.sidebar .theme-mode {
+  flex: 1;
+  padding: 8px 4px;
+  display: inline-flex;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.sidebar .theme-mode.active {
+  background: var(--primary);
+}
