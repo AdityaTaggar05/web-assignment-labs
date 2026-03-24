@@ -1,6 +1,11 @@
 import { Element } from "./element.js";
 
 export class CircleElement extends Element {
+  constructor(properties) {
+    super(properties);
+    this.type = "circle";
+  }
+
   draw(ctx) {
     ctx.beginPath();
 

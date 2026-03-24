@@ -1,6 +1,11 @@
 import { Element } from "./element.js";
 
 export class PencilElement extends Element {
+  constructor(properties) {
+    super(properties);
+    this.type = "pencil";
+  }
+
   draw(ctx) {
     // Apply styling
     ctx.strokeStyle = this.properties.strokeColor;

@@ -1,6 +1,11 @@
 import { Element } from "./element.js";
 
 export class RectangleElement extends Element {
+  constructor(properties) {
+    super(properties);
+    this.type = "rectangle";
+  }
+
   draw(ctx) {
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;

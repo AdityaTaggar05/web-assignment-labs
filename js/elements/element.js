@@ -4,4 +4,11 @@ export class Element {
   }
 
   draw(ctx) { }
+
+  toJson() {
+    return {
+      type: this.type,
+      properties: this.properties,
+    };
+  }
 }

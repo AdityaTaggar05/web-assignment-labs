@@ -1,6 +1,11 @@
 import { Element } from "./element.js";
 
 export class EllipseElement extends Element {
+  constructor(properties) {
+    super(properties);
+    this.type = "ellipse";
+  }
+
   draw(ctx) {
     ctx.beginPath();
 

@@ -1,13 +1,59 @@
+import { PencilElement } from "./elements/pencil.js";
+import { RectangleElement } from "./elements/rectangle.js";
+import { TriangleElement } from "./elements/triangle.js";
+import { CircleElement } from "./elements/circle.js";
+import { EllipseElement } from "./elements/ellipse.js";
+
 export class StateManager {
   constructor() {
     this.ctx = null;
     this.currentTool = null;
     this.elements = [];
     this.undoneElements = [];
+
+    this.loadElements();
   }
 
   bindContext(ctx) {
     this.ctx = ctx;
+    this.render();
+  }
+
+  loadElements() {
+    let storedElems = sessionStorage.getItem("elements");
+    if (storedElems) {
+      let parsedElems = JSON.parse(storedElems);
+
+      for (const elem of parsedElems) {
+        switch (elem.type) {
+          case "pencil":
+            this.elements.push(new PencilElement(elem.properties));
+            break;
+          case "rectangle":
+            this.elements.push(new RectangleElement(elem.properties));
+            break;
+          case "triangle":
+            this.elements.push(new TriangleElement(elem.properties));
+            break;
+          case "circle":
+            this.elements.push(new CircleElement(elem.properties));
+            break;
+          case "ellipse":
+            this.elements.push(new EllipseElement(elem.properties));
+            break;
+        }
+      }
+    }
+  }
+
+  storeElements() {
+    let storedElems = [];
+
+    for (const elem of this.elements) {
+      storedElems.push(elem.toJson());
+    }
+
+    sessionStorage.setItem("elements", JSON.stringify(storedElems));
   }
 
   setTool(tool) {
@@ -25,12 +71,16 @@ export class StateManager {
   add(element) {
     this.elements.push(element);
     element.draw(this.ctx);
+
+    this.storeElements();
   }
 
   undo() {
     if (this.elements.length > 0) {
       this.undoneElements.push(this.elements.pop());
       this.render();
+
+      this.storeElements();
     }
   }
 
@@ -38,6 +88,8 @@ export class StateManager {
     if (this.undoneElements.length > 0) {
       this.elements.push(this.undoneElements.pop());
       this.render();
+
+      this.storeElements();
     }
   }
 
@@ -45,6 +97,8 @@ export class StateManager {
     this.elements = [];
     this.undoneElements = [];
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+    this.storeElements();
   }
 
   resizeCanvas(scaleX, scaleY) {

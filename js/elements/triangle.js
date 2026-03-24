@@ -1,6 +1,11 @@
 import { Element } from "./element.js";
 
 export class TriangleElement extends Element {
+  constructor(properties) {
+    super(properties);
+    this.type = "triangle";
+  }
+
   draw(ctx) {
     ctx.beginPath();
 
