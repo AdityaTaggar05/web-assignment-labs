@@ -41,6 +41,7 @@ export class TriangleElement extends Element {
     ctx.strokeStyle = this.properties.strokeColor;
     ctx.fillStyle = this.properties.fillColor;
     ctx.lineWidth = this.properties.strokeWidth;
+    ctx.setLineDash([0, 0]);
 
     ctx.moveTo(this.properties.path[0][0], this.properties.path[0][1]);
     ctx.lineTo(this.properties.path[1][0], this.properties.path[1][1]);
@@ -51,5 +52,33 @@ export class TriangleElement extends Element {
     ctx.stroke();
 
     if (this.properties.fill) ctx.fill();
+
+    if (this.isSelected) {
+      const minX = Math.min(
+        this.properties.path[0][0],
+        this.properties.path[1][0],
+        this.properties.path[2][0],
+      );
+      const maxX = Math.max(
+        this.properties.path[0][0],
+        this.properties.path[1][0],
+        this.properties.path[2][0],
+      );
+      const minY = Math.min(
+        this.properties.path[0][1],
+        this.properties.path[1][1],
+        this.properties.path[2][1],
+      );
+      const maxY = Math.max(
+        this.properties.path[0][1],
+        this.properties.path[1][1],
+        this.properties.path[2][1],
+      );
+
+      ctx.setLineDash([2, 4]);
+      ctx.lineWidth = 1;
+      console.log(minX, minY, maxX - minX, maxY - minY);
+      ctx.strokeRect(minX, minY, maxX - minX, maxY - minY);
+    }
   }
 }
