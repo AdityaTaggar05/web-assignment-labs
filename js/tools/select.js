@@ -19,7 +19,9 @@ export class SelectTool extends Tool {
 
   onMouseDown(e, ctx) {
     if (this.selectedElement) {
+      this.selectedElement.isSelected = false;
       this.selectedElement = null;
+      this.stateManager.render();
       this.stateManager.storeElements();
       return;
     }
@@ -27,8 +29,11 @@ export class SelectTool extends Tool {
     for (const elem of this.stateManager.elements.toReversed()) {
       if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
         this.selectedElement = elem;
+        elem.isSelected = true;
       }
     }
+
+    this.stateManager.render();
   }
 
   onMouseMove(e, ctx) {

@@ -23,6 +23,7 @@ export class CircleElement extends Element {
 
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;
+      ctx.setLineDash([0, 0]);
       ctx.strokeStyle = this.properties.strokeColor;
       ctx.arc(
         this.properties.x,
@@ -36,14 +37,23 @@ export class CircleElement extends Element {
 
     if (this.properties.fill) {
       ctx.fillStyle = this.properties.fillColor;
+      ctx.fill();
+    }
+    ctx.closePath();
+
+    if (this.isSelected) {
+      ctx.beginPath();
+      ctx.setLineDash([1, 6]);
+      ctx.lineWidth = 1;
       ctx.arc(
         this.properties.x,
         this.properties.y,
-        this.properties.radius,
+        this.properties.radius * 1.1,
         0,
         Math.PI * 2,
       );
-      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
     }
   }
 }
