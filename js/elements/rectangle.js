@@ -6,6 +6,17 @@ export class RectangleElement extends Element {
     this.type = "rectangle";
   }
 
+  isTargetted(x, y, ctx) {
+    if (
+      x > this.properties.x &&
+      x < this.properties.x + this.properties.width &&
+      y > this.properties.y &&
+      y < this.properties.y + this.properties.height
+    )
+      return true;
+    return false;
+  }
+
   draw(ctx) {
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;

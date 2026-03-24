@@ -6,6 +6,13 @@ export class CircleElement extends Element {
     this.type = "circle";
   }
 
+  isTargetted(x, y, ctx) {
+    const dx = (x - this.properties.x) / this.properties.radius;
+    const dy = (y - this.properties.y) / this.properties.radius;
+
+    return dx * dx + dy * dy <= 1;
+  }
+
   draw(ctx) {
     ctx.beginPath();
 

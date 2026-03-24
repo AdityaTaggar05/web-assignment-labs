@@ -6,6 +6,13 @@ export class EllipseElement extends Element {
     this.type = "ellipse";
   }
 
+  isTargetted(x, y, ctx) {
+    const dx = (x - this.properties.x) / this.properties.radiusX;
+    const dy = (y - this.properties.y) / this.properties.radiusY;
+
+    return dx * dx + dy * dy <= 1;
+  }
+
   draw(ctx) {
     ctx.beginPath();
 

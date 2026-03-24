@@ -4,6 +4,7 @@ export class Element {
   }
 
   draw(ctx) { }
+  isTargetted(x, y, ctx) { }
 
   toJson() {
     return {
