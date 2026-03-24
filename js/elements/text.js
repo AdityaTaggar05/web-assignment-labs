@@ -19,6 +19,11 @@ export class TextElement extends Element {
     );
   }
 
+  translate(dx, dy) {
+    this.properties.x += dx;
+    this.properties.y += dy;
+  }
+
   draw(ctx) {
     ctx.fillStyle = this.properties.color;
     ctx.font = `${this.properties.fontSize}px ${this.properties.fontFamily}`;
