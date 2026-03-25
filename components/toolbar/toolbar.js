@@ -6,6 +6,7 @@ import { RectangleTool } from "../../js/tools/rectangle.js";
 import { TriangleTool } from "../../js/tools/triangle.js";
 import { TextTool } from "../../js/tools/text.js";
 import { SelectTool } from "../../js/tools/select.js";
+import { EraserTool } from "../../js/tools/eraser.js";
 
 function selectTool(tool, tools) {
   if (!tool.classList.contains("active")) {
@@ -24,6 +25,7 @@ export function setupToolbarEvents(tools, stateManager) {
   const triangle = new TriangleTool(stateManager);
   const text = new TextTool(stateManager);
   const select = new SelectTool(stateManager);
+  const eraser = new EraserTool(stateManager);
 
   stateManager.setTool(select);
   selectTool(
@@ -62,6 +64,10 @@ export function setupToolbarEvents(tools, stateManager) {
           break;
         case "select":
           stateManager.setTool(select);
+          selectTool(tool, tools);
+          break;
+        case "eraser":
+          stateManager.setTool(eraser);
           selectTool(tool, tools);
           break;
         case "undo":

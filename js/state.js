@@ -97,6 +97,16 @@ export class StateManager {
     this.storeElements();
   }
 
+  remove(element) {
+    this.elements = this.elements.filter((elem) => elem !== element);
+    this.undoneElements.push(element);
+
+    console.log(this.elements, this.undoneElements);
+
+    this.render();
+    this.storeElements();
+  }
+
   undo() {
     if (this.elements.length > 0) {
       this.undoneElements.push(this.elements.pop());
