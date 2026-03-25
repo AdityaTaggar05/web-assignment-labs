@@ -5,6 +5,13 @@ export class EraserTool extends Tool {
     super({}, stateManager);
   }
 
+  getSidebarOptions() {
+    return {
+      name: "Eraser Tool",
+      options: [],
+    };
+  }
+
   onMouseDown(e, ctx) {
     this.isErasing = true;
   }
@@ -13,7 +20,7 @@ export class EraserTool extends Tool {
     if (!this.isErasing) return;
 
     for (const elem of this.stateManager.elements.toReversed()) {
-      if (elem.isTargetted(e.offsetX, e.offsetY)) {
+      if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
         this.stateManager.remove(elem);
         break;
       }
