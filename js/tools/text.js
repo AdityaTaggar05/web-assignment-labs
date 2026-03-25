@@ -2,14 +2,15 @@ import { Tool } from "./tool.js";
 import { TextElement } from "../elements/text.js";
 
 export class TextTool extends Tool {
-  constructor(stateManager) {
+  constructor(stateManager, { properties, editing } = {}) {
     super(
-      {
+      properties ?? {
         color: "#000000",
         fontSize: 16,
         fontFamily: "Kode Mono",
       },
       stateManager,
+      editing,
     );
     this.isDrawing = false;
   }
@@ -40,11 +41,15 @@ export class TextTool extends Tool {
     const colorPicker = document.querySelector("#colorPicker");
     colorPicker.addEventListener("input", (e) => {
       this.state.color = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const fontSize = document.querySelector("#fontSize");
     fontSize.addEventListener("input", (e) => {
       this.state.fontSize = Number(e.target.value);
+
+      if (this.editing) this.stateManager.render();
     });
   }
 

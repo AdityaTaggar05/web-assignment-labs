@@ -2,13 +2,14 @@ import { PencilElement } from "../elements/pencil.js";
 import { Tool } from "./tool.js";
 
 export class PencilTool extends Tool {
-  constructor(stateManager) {
+  constructor(stateManager, { properties, editing } = {}) {
     super(
-      {
+      properties ?? {
         strokeColor: "#000000",
         strokeWidth: 5,
       },
       stateManager,
+      editing,
     );
     this.isDrawing = false;
   }
@@ -39,11 +40,15 @@ export class PencilTool extends Tool {
     const strokeWidth = document.getElementById("strokeWidth");
     strokeWidth.addEventListener("input", (e) => {
       this.state.strokeWidth = Number(e.target.value);
+
+      if (this.editing) this.stateManager.render();
     });
 
     const strokePicker = document.getElementById("strokePicker");
     strokePicker.addEventListener("input", (e) => {
       this.state.strokeColor = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
   }
 

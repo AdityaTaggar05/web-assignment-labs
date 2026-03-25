@@ -51,22 +51,40 @@ export class SelectTool extends Tool {
       let tool = null;
       switch (this.selectedElement.type) {
         case "pencil":
-          tool = new PencilTool(this.selectedElement.properties);
+          tool = new PencilTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
         case "rectangle":
-          tool = new RectangleTool(this.selectedElement.properties);
+          tool = new RectangleTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
         case "circle":
-          tool = new CircleTool(this.selectedElement.properties);
+          tool = new CircleTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
         case "ellipse":
-          tool = new EllipseTool(this.selectedElement.properties);
+          tool = new EllipseTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
         case "triangle":
-          tool = new TriangleTool(this.selectedElement.properties);
+          tool = new TriangleTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
         case "text":
-          tool = new TextTool(this.selectedElement.properties);
+          tool = new TextTool(this.stateManager, {
+            properties: this.selectedElement.properties,
+            editing: true,
+          });
           break;
       }
 

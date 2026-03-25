@@ -2,9 +2,9 @@ import { Tool } from "./tool.js";
 import { EllipseElement } from "../elements/ellipse.js";
 
 export class EllipseTool extends Tool {
-  constructor(stateManager) {
+  constructor(stateManager, { properties, editing } = {}) {
     super(
-      {
+      properties ?? {
         strokeColor: "#000000",
         fill: false,
         fillColor: "#000000",
@@ -12,6 +12,7 @@ export class EllipseTool extends Tool {
         strokeStyle: "solid",
       },
       stateManager,
+      editing,
     );
     this.isDrawing = false;
   }
@@ -54,21 +55,29 @@ export class EllipseTool extends Tool {
     const fillToggle = document.querySelector("#fillToggle");
     fillToggle.addEventListener("input", (e) => {
       this.state.fill = e.currentTarget.checked;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const fillPicker = document.querySelector("#fillPicker");
     fillPicker.addEventListener("input", (e) => {
       this.state.fillColor = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const strokePicker = document.querySelector("#strokePicker");
     strokePicker.addEventListener("input", (e) => {
       this.state.strokeColor = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const strokeWidth = document.querySelector("#strokeWidth");
     strokeWidth.addEventListener("input", (e) => {
       this.state.strokeWidth = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
   }
 

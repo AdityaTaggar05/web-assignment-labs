@@ -3,15 +3,16 @@ import { TrianglePreviewElement } from "../elements/triangle_preview.js";
 import { TriangleElement } from "../elements/triangle.js";
 
 export class TriangleTool extends Tool {
-  constructor(stateManager) {
+  constructor(stateManager, { properties, editing } = {}) {
     super(
-      {
+      properties ?? {
         fill: false,
         fillColor: "#000000",
         strokeColor: "#000000",
         strokeWidth: 3,
       },
       stateManager,
+      editing,
     );
     this.isDrawing = false;
     this.path = [];
@@ -66,21 +67,29 @@ export class TriangleTool extends Tool {
     const fillToggle = document.querySelector("#fillToggle");
     fillToggle.addEventListener("input", (e) => {
       this.state.fill = e.currentTarget.checked;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const fillPicker = document.querySelector("#fillPicker");
     fillPicker.addEventListener("input", (e) => {
       this.state.fillColor = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const strokePicker = document.querySelector("#strokePicker");
     strokePicker.addEventListener("input", (e) => {
       this.state.strokeColor = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
 
     const strokeWidth = document.querySelector("#strokeWidth");
     strokeWidth.addEventListener("input", (e) => {
       this.state.strokeWidth = e.target.value;
+
+      if (this.editing) this.stateManager.render();
     });
   }
 
