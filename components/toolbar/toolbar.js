@@ -25,6 +25,12 @@ export function setupToolbarEvents(tools, stateManager) {
   const text = new TextTool(stateManager);
   const select = new SelectTool(stateManager);
 
+  stateManager.setTool(select);
+  selectTool(
+    [...tools].find((tool) => tool.getAttribute("data-action") === "select"),
+    tools,
+  );
+
   tools.forEach((tool) => {
     tool.addEventListener("click", () => {
       const name = tool.getAttribute("data-action");
