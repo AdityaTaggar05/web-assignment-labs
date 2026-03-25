@@ -41,3 +41,21 @@
   flex-grow: 1;
   border-bottom: 1px solid var(--outline);
 }
+
+@media only screen and (max-width: 600px) {
+  .toolbar {
+    flex-direction: row;
+    border: none;
+    border-bottom: 2px solid var(--outline);
+    height: 4vh;
+    width: 100%;
+  }
+
+  .tool {
+    border-width: 0 2px 3px 1px;
+  }
+
+  .spacer {
+    border-right: 2px solid var(--outline);
+  }
+}

@@ -26,3 +26,13 @@ body {
   background: #ffffff;
   flex: 1;
 }
+
+@media only screen and (max-width: 600px) {
+  .workspace {
+    flex-direction: column;
+  }
+
+  .canvas {
+    width: 100%;
+  }
+}
