@@ -8,6 +8,7 @@ import { TextElement } from "./elements/text.js";
 export class StateManager {
   constructor() {
     this.ctx = null;
+    this.canvasColor = "#ffffff";
     this.currentTool = null;
     this.elements = [];
     this.undoneElements = [];
@@ -141,6 +142,9 @@ export class StateManager {
 
   render() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.fillStyle = this.canvasColor;
+    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
     for (const element of this.elements) {
       element.draw(this.ctx);
     }

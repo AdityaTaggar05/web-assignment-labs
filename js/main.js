@@ -5,7 +5,7 @@ import { setupToolbarEvents } from "../components/toolbar/toolbar.js";
 // Setup tool manager and canvas with defaults
 const canvas = document.querySelector("canvas");
 const stateManager = new StateManager();
-setupCanvas(canvas, stateManager);
+const ctx = setupCanvas(canvas, stateManager);
 
 // Registering Event handling
 const tools = document.querySelectorAll(".tool");
@@ -13,4 +13,15 @@ setupToolbarEvents(tools, stateManager);
 
 document.getElementById("clear-btn").addEventListener("click", () => {
   stateManager.clear();
+});
+
+document.getElementById("save-btn").addEventListener("click", () => {
+  const canvas = ctx.canvas;
+  canvas.toBlob(function(blob) {
+    const link = document.createElement("a");
+    link.download = "canvas-illustraitor.png";
+    link.href = URL.createObjectURL(blob);
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }, "image/png");
 });
