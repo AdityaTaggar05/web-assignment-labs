@@ -1,3 +1,18 @@
+function _offset(e, ctx) {
+  const rect = ctx.canvas.getBoundingClientRect();
+  e.offsetX -= rect.left;
+  e.offsetY -= rect.top;
+
+  return e;
+}
+function _handleTouch(e, ctx) {
+  e.preventDefault();
+  e.offsetX = e.touches[0].clientX;
+  e.offsetY = e.touches[0].clientY;
+
+  return _offset(e, ctx);
+}
+
 export function setupCanvas(canvas, stateManager) {
   const ctx = canvas.getContext("2d");
 
@@ -28,12 +43,28 @@ export function setupCanvas(canvas, stateManager) {
     stateManager.currentTool?.onMouseDown(e, ctx);
   });
 
+  canvas.addEventListener("touchstart", (e) => {
+    e = _handleTouch(e, ctx);
+    stateManager.currentTool?.onMouseDown(e, ctx);
+  });
+
   canvas.addEventListener("mousemove", (e) => {
+    stateManager.currentTool?.onMouseMove(e, ctx);
+  });
+
+  canvas.addEventListener("touchmove", (e) => {
+    e = _handleTouch(e, ctx);
     stateManager.currentTool?.onMouseMove(e, ctx);
   });
 
   canvas.addEventListener("mouseup", (e) => {
     stateManager.currentTool?.onMouseUp(e, ctx);
+  });
+
+  canvas.addEventListener("touchend", (e) => {
+    e.offsetX = e.changedTouches[0].clientX;
+    e.offsetY = e.changedTouches[0].clientY;
+    stateManager.currentTool?.onMouseUp(_offset(e, ctx), ctx);
   });
 
   return ctx;
