@@ -23,7 +23,7 @@ export class StateManager {
   }
 
   loadTheme() {
-    const theme = sessionStorage.getItem("theme");
+    const theme = localStorage.getItem("theme");
     if (theme) {
       document.documentElement.setAttribute("data-theme", theme);
 
