@@ -4,6 +4,8 @@ import { TriangleElement } from "./elements/triangle.js";
 import { CircleElement } from "./elements/circle.js";
 import { EllipseElement } from "./elements/ellipse.js";
 import { TextElement } from "./elements/text.js";
+import { SelectTool } from "./tools/select.js";
+import { selectTool } from "../components/toolbar/toolbar.js";
 
 export class StateManager {
   constructor() {
@@ -109,6 +111,15 @@ export class StateManager {
   add(element) {
     this.elements.push(element);
     element.draw(this.ctx);
+  }
+
+  selectLastElement() {
+    this.currentTool = new SelectTool(this);
+    selectTool(
+      document.querySelector(".tool[data-action='select']"),
+      document.querySelectorAll(".tool"),
+    );
+    this.currentTool.select(this.elements.at(-1));
   }
 
   remove(element) {

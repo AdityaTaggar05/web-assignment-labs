@@ -40,56 +40,58 @@ export class SelectTool extends Tool {
     this.mouseDown = true;
     for (const elem of this.stateManager.elements.toReversed()) {
       if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
-        this.selectedElement = elem;
-        elem.isSelected = true;
+        select(elem);
       }
     }
+  }
 
-    if (this.selectedElement) {
-      this.stateManager.render();
+  select(elem) {
+    this.selectedElement = elem;
+    elem.isSelected = true;
 
-      let tool = null;
-      switch (this.selectedElement.type) {
-        case "pencil":
-          tool = new PencilTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-        case "rectangle":
-          tool = new RectangleTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-        case "circle":
-          tool = new CircleTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-        case "ellipse":
-          tool = new EllipseTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-        case "triangle":
-          tool = new TriangleTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-        case "text":
-          tool = new TextTool(this.stateManager, {
-            properties: this.selectedElement.properties,
-            editing: true,
-          });
-          break;
-      }
+    this.stateManager.render();
 
-      if (tool) renderSidebar(tool);
+    let tool = null;
+    switch (this.selectedElement.type) {
+      case "pencil":
+        tool = new PencilTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
+      case "rectangle":
+        tool = new RectangleTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
+      case "circle":
+        tool = new CircleTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
+      case "ellipse":
+        tool = new EllipseTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
+      case "triangle":
+        tool = new TriangleTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
+      case "text":
+        tool = new TextTool(this.stateManager, {
+          properties: this.selectedElement.properties,
+          editing: true,
+        });
+        break;
     }
+
+    if (tool) renderSidebar(tool);
   }
 
   onMouseMove(e, ctx) {

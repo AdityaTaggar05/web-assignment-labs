@@ -64,6 +64,8 @@ export class TextTool extends Tool {
 
       this.stateManager.add(element);
       this.stateManager.storeElements();
+
+      this.stateManager.selectLastElement();
     }
 
     this.input.remove();

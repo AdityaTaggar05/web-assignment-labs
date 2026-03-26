@@ -94,5 +94,7 @@ export class PencilTool extends Tool {
     this.stateManager.storeElements();
 
     this.preview = null;
+
+    this.stateManager.selectLastElement();
   }
 }
