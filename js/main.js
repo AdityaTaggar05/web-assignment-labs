@@ -25,3 +25,9 @@ document.getElementById("save-btn").addEventListener("click", () => {
     URL.revokeObjectURL(link.href);
   }, "image/png");
 });
+
+document.getElementById("canvas-color").addEventListener("input", (e) => {
+  stateManager.canvasColor = e.target.value;
+  sessionStorage.setItem("canvasColor", e.target.value);
+  stateManager.render();
+});

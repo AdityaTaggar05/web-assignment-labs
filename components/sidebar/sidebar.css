@@ -54,12 +54,18 @@
   border: 1.5px solid var(--outline);
 }
 
-.sidebar .theme-toggle {
+.sidebar .floating-actions {
+  display: inline-flex;
+  gap: 2vw;
+  align-items: center;
+
   /* Position */
   position: absolute;
   bottom: 1vh;
   right: 21vw;
+}
 
+.sidebar .theme-toggle {
   /* Sizing */
   width: 5vw;
 
@@ -108,9 +114,12 @@
     top: -2vh;
   }
 
-  .sidebar .theme-toggle {
+  .sidebar .floating-actions {
     bottom: 21vh;
     right: 1vw;
+  }
+
+  .sidebar .theme-toggle {
     width: 20vw;
   }
 

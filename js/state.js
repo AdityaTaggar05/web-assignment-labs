@@ -13,7 +13,7 @@ export class StateManager {
     this.elements = [];
     this.undoneElements = [];
 
-    this.loadElements();
+    this.loadCanvas();
     this.loadTheme();
   }
 
@@ -39,7 +39,16 @@ export class StateManager {
     }
   }
 
-  loadElements() {
+  loadCanvas() {
+    let storedCanvasColor = sessionStorage.getItem("canvasColor");
+    if (storedCanvasColor) {
+      this.canvasColor = storedCanvasColor;
+
+      document
+        .getElementById("canvas-color")
+        .setAttribute("value", storedCanvasColor);
+    }
+
     let storedElems = sessionStorage.getItem("elements");
     if (storedElems) {
       let parsedElems = JSON.parse(storedElems);
