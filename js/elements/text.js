@@ -46,6 +46,8 @@ export class TextElement extends Element {
         right - left + 2 * padding,
         bottom - top + 2 * padding,
       );
+
+      ctx.setLineDash([0, 0]);
     }
   }
 }

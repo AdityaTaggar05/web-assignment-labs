@@ -23,7 +23,6 @@ export class CircleElement extends Element {
 
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;
-      ctx.setLineDash([0, 0]);
       ctx.strokeStyle = this.properties.strokeColor;
       ctx.arc(
         this.properties.x,
@@ -54,6 +53,7 @@ export class CircleElement extends Element {
       );
       ctx.stroke();
       ctx.closePath();
+      ctx.setLineDash([0, 0]);
     }
   }
 }
