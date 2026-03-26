@@ -10,13 +10,10 @@ export class TextElement extends Element {
     const metrics = ctx.measureText(this.properties.text);
     const top = this.properties.y - metrics.actualBoundingBoxAscent;
     const bottom = this.properties.y + metrics.actualBoundingBoxDescent;
+    const left = this.properties.x;
+    const right = this.properties.x + metrics.width;
 
-    return (
-      x >= this.properties.x &&
-      x <= this.properties.x + metrics.width &&
-      y >= top &&
-      y <= bottom
-    );
+    return x >= left && x <= right && y >= top && y <= bottom;
   }
 
   translate(dx, dy) {
@@ -30,5 +27,27 @@ export class TextElement extends Element {
     ctx.textBaseline = "top";
 
     ctx.fillText(this.properties.text, this.properties.x, this.properties.y);
+
+    if (this.isSelected) {
+      const metrics = ctx.measureText(this.properties.text);
+      const top = this.properties.y - metrics.actualBoundingBoxAscent;
+      const bottom = this.properties.y + metrics.actualBoundingBoxDescent;
+      const left = this.properties.x;
+      const right = this.properties.x + metrics.width;
+      const padding = 8;
+
+      ctx.strokeStyle = this.properties.color;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 4]);
+
+      ctx.strokeRect(
+        left - padding,
+        top - padding,
+        right - left + 2 * padding,
+        bottom - top + 2 * padding,
+      );
+
+      ctx.setLineDash([0, 0]);
+    }
   }
 }

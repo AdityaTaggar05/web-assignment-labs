@@ -136,6 +136,9 @@ export class TriangleTool extends Tool {
 
       this.stateManager.undo();
       this.stateManager.add(element);
+      this.stateManager.storeElements();
+
+      this.stateManager.selectLastElement();
     }
   }
 }

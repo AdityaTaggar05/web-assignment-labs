@@ -1,6 +1,8 @@
 import { PencilElement } from "../elements/pencil.js";
 import { Tool } from "./tool.js";
 
+const MIN_DIST = 2;
+
 export class PencilTool extends Tool {
   constructor(stateManager, { properties, editing } = {}) {
     super(
@@ -56,18 +58,43 @@ export class PencilTool extends Tool {
     this.isDrawing = true;
 
     this.preview = new PencilElement({ ...this.state });
-    this.preview.properties.path = [e.offsetX, e.offsetY];
-    this.stateManager.add(this.preview);
+    this.preview.properties.path = [[e.offsetX, e.offsetY]];
+
+    ctx.strokeStyle = this.state.strokeColor;
+    ctx.lineWidth = this.state.strokeWidth;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
   }
 
   onMouseMove(e, ctx) {
     if (!this.isDrawing) return;
 
-    this.preview.properties.path.push([e.offsetX, e.offsetY]);
-    this.stateManager.render();
+    const x = e.offsetX;
+    const y = e.offsetY;
+
+    const last = this.preview.properties.path.at(-1);
+    if (!last) return;
+
+    const dx = x - last[0];
+    const dy = y - last[1];
+
+    if (dx * dx + dy * dy < MIN_DIST * MIN_DIST) return;
+
+    this.preview.properties.path.push([x, y]);
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
   }
 
   onMouseUp(_, __) {
     this.isDrawing = false;
+
+    this.stateManager.render();
+    this.stateManager.add(this.preview);
+    this.stateManager.storeElements();
+
+    this.preview = null;
+
+    this.stateManager.selectLastElement();
   }
 }

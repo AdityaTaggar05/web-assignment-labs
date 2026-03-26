@@ -4,6 +4,8 @@ import { TriangleElement } from "./elements/triangle.js";
 import { CircleElement } from "./elements/circle.js";
 import { EllipseElement } from "./elements/ellipse.js";
 import { TextElement } from "./elements/text.js";
+import { SelectTool } from "./tools/select.js";
+import { selectTool } from "../components/toolbar/toolbar.js";
 
 export class StateManager {
   constructor() {
@@ -13,8 +15,8 @@ export class StateManager {
     this.elements = [];
     this.undoneElements = [];
 
-    this.loadCanvas();
     this.loadTheme();
+    this.loadCanvas();
   }
 
   bindContext(ctx) {
@@ -43,11 +45,11 @@ export class StateManager {
     let storedCanvasColor = sessionStorage.getItem("canvasColor");
     if (storedCanvasColor) {
       this.canvasColor = storedCanvasColor;
-
-      document
-        .getElementById("canvas-color")
-        .setAttribute("value", storedCanvasColor);
     }
+
+    document
+      .getElementById("canvas-color")
+      .setAttribute("value", this.canvasColor);
 
     let storedElems = sessionStorage.getItem("elements");
     if (storedElems) {
@@ -89,6 +91,12 @@ export class StateManager {
   }
 
   setTool(tool) {
+    if (this.currentTool?.selectedElement) {
+      this.currentTool.selectedElement.isSelected = false;
+      this.currentTool.selectedElement = null;
+      this.render();
+    }
+
     if (this.currentTool?.onDeselect) {
       this.currentTool.onDeselect();
     }
@@ -103,8 +111,15 @@ export class StateManager {
   add(element) {
     this.elements.push(element);
     element.draw(this.ctx);
+  }
 
-    this.storeElements();
+  selectLastElement() {
+    this.currentTool = new SelectTool(this);
+    selectTool(
+      document.querySelector(".tool[data-action='select']"),
+      document.querySelectorAll(".tool"),
+    );
+    this.currentTool.select(this.elements.at(-1));
   }
 
   remove(element) {
@@ -138,8 +153,8 @@ export class StateManager {
   clear() {
     this.elements = [];
     this.undoneElements = [];
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
+    this.render();
     this.storeElements();
   }
 

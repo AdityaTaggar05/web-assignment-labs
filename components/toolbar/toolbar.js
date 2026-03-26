@@ -8,7 +8,7 @@ import { TextTool } from "../../js/tools/text.js";
 import { SelectTool } from "../../js/tools/select.js";
 import { EraserTool } from "../../js/tools/eraser.js";
 
-function selectTool(tool, tools) {
+export function selectTool(tool, tools) {
   if (!tool.classList.contains("active")) {
     tools.forEach((t) => t.classList.remove("active"));
     tool.classList.add("active");

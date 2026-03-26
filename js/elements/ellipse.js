@@ -23,7 +23,6 @@ export class EllipseElement extends Element {
 
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;
-      ctx.setLineDash([0, 0]);
       ctx.strokeStyle = this.properties.strokeColor;
       ctx.ellipse(
         this.properties.x,
@@ -59,6 +58,7 @@ export class EllipseElement extends Element {
       );
       ctx.stroke();
       ctx.closePath();
+      ctx.setLineDash([0, 0]);
     }
   }
 }

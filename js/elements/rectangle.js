@@ -25,7 +25,6 @@ export class RectangleElement extends Element {
   draw(ctx) {
     if (this.properties.strokeWidth > 0) {
       ctx.lineWidth = this.properties.strokeWidth;
-      ctx.setLineDash([0, 0]);
       ctx.strokeStyle = this.properties.strokeColor;
       ctx.strokeRect(
         this.properties.x,
@@ -55,6 +54,7 @@ export class RectangleElement extends Element {
         this.properties.width + 12,
         this.properties.height + 12,
       );
+      ctx.setLineDash([0, 0]);
     }
   }
 }

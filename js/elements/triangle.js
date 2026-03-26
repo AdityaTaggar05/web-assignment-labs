@@ -41,7 +41,6 @@ export class TriangleElement extends Element {
     ctx.strokeStyle = this.properties.strokeColor;
     ctx.fillStyle = this.properties.fillColor;
     ctx.lineWidth = this.properties.strokeWidth;
-    ctx.setLineDash([0, 0]);
 
     ctx.moveTo(this.properties.path[0][0], this.properties.path[0][1]);
     ctx.lineTo(this.properties.path[1][0], this.properties.path[1][1]);
@@ -77,8 +76,8 @@ export class TriangleElement extends Element {
 
       ctx.setLineDash([2, 4]);
       ctx.lineWidth = 1;
-      console.log(minX, minY, maxX - minX, maxY - minY);
       ctx.strokeRect(minX, minY, maxX - minX, maxY - minY);
+      ctx.setLineDash([0, 0]);
     }
   }
 }
