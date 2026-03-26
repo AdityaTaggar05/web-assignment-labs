@@ -27,7 +27,7 @@ export class SelectTool extends Tool {
   onMouseDown(e, ctx) {
     if (
       this.selectedElement &&
-      !this.selectedElement.isTargetted(e.offsetX, e.offsetY)
+      !this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
     ) {
       this.selectedElement.isSelected = false;
       this.selectedElement = null;
