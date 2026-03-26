@@ -34,7 +34,6 @@ export class SelectTool extends Tool {
       this.stateManager.render();
       renderSidebar(this);
       this.stateManager.storeElements();
-      return;
     }
 
     this.mouseDown = true;
