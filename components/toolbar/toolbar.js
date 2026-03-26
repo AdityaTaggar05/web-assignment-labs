@@ -37,12 +37,6 @@ export function setupToolbarEvents(tools, stateManager) {
     tool.addEventListener("click", () => {
       const name = tool.getAttribute("data-action");
 
-      if (stateManager.currentTool.selectedElement) {
-        stateManager.currentTool.selectedElement.isSelected = false;
-        stateManager.currentTool.selectedElement = null;
-        stateManager.render();
-      }
-
       switch (name) {
         case "pencil":
           stateManager.setTool(pencil);
