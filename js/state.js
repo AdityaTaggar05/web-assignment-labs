@@ -103,8 +103,6 @@ export class StateManager {
   add(element) {
     this.elements.push(element);
     element.draw(this.ctx);
-
-    this.storeElements();
   }
 
   remove(element) {

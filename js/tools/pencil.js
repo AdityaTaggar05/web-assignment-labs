@@ -69,5 +69,6 @@ export class PencilTool extends Tool {
 
   onMouseUp(_, __) {
     this.isDrawing = false;
+    this.stateManager.storeElements();
   }
 }

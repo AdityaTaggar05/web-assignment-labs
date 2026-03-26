@@ -105,5 +105,6 @@ export class RectangleTool extends Tool {
     this.isDrawing = false;
 
     if (e.offsetX == this.x && e.offsetY == this.y) this.stateManager.undo();
+    else this.stateManager.storeElements();
   }
 }
