@@ -58,7 +58,7 @@ export class PencilTool extends Tool {
     this.isDrawing = true;
 
     this.preview = new PencilElement({ ...this.state });
-    this.preview.properties.path = [e.offsetX, e.offsetY];
+    this.preview.properties.path = [[e.offsetX, e.offsetY]];
 
     ctx.strokeStyle = this.state.strokeColor;
     ctx.lineWidth = this.state.strokeWidth;

@@ -39,7 +39,7 @@ export class SelectTool extends Tool {
     this.mouseDown = true;
     for (const elem of this.stateManager.elements.toReversed()) {
       if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
-        select(elem);
+        this.select(elem);
       }
     }
   }
