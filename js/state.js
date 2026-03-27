@@ -13,7 +13,9 @@ export class StateManager {
     this.canvasColor = "#ffffff";
     this.currentTool = null;
     this.elements = [];
-    this.undoneElements = [];
+
+    this.history = [];
+    this.redoStack = [];
 
     this.loadTheme();
     this.loadCanvas();
@@ -111,48 +113,110 @@ export class StateManager {
   add(element) {
     this.elements.push(element);
     element.draw(this.ctx);
+
+    this.history.push({
+      operation: "add",
+      index: this.elements.length - 1,
+    });
+    this.redoStack = [];
+
+    this.storeElements();
   }
 
   selectLastElement() {
-    this.currentTool = new SelectTool(this);
+    this.currentTool = new SelectTool(this, this.elements.length - 1);
     selectTool(
       document.querySelector(".tool[data-action='select']"),
       document.querySelectorAll(".tool"),
     );
-    this.currentTool.select(this.elements.at(-1));
+    this.currentTool.select(-1);
   }
 
   remove(element) {
-    this.elements = this.elements.filter((elem) => elem !== element);
-    this.undoneElements.push(element);
+    const index = this.elements.indexOf(element);
 
-    console.log(this.elements, this.undoneElements);
+    if (index != -1) {
+      this.elements.splice(index, 1);
 
-    this.render();
-    this.storeElements();
+      this.history.push({
+        operation: "remove",
+        element: element,
+        index: index,
+      });
+      this.redoStack = [];
+
+      this.render();
+      this.storeElements();
+    }
   }
 
   undo() {
-    if (this.elements.length > 0) {
-      this.undoneElements.push(this.elements.pop());
-      this.render();
+    if (this.history.length > 0) {
+      const state = this.history.pop();
+      this.redoStack.push(state);
 
+      switch (state.operation) {
+        case "remove":
+          this.elements.splice(state.index, 0, state.element);
+          break;
+        case "add":
+          this.redoStack.at(-1).element = this.elements.at(state.index);
+          this.elements.splice(state.index, 1);
+          break;
+        case "clear":
+          this.elements = [...state.elements];
+          delete this.redoStack.at(-1).elements;
+          break;
+        case "change":
+          for (const key in state.changes) {
+            const change = state.changes[key];
+            this.elements[state.index].properties[key] = change.old;
+          }
+          break;
+      }
+
+      this.render();
       this.storeElements();
     }
   }
 
   redo() {
-    if (this.undoneElements.length > 0) {
-      this.elements.push(this.undoneElements.pop());
-      this.render();
+    if (this.redoStack.length > 0) {
+      const state = this.redoStack.pop();
+      this.history.push(state);
 
+      switch (state.operation) {
+        case "remove":
+          this.elements.splice(state.index, 1);
+          break;
+        case "add":
+          this.elements.splice(state.index, 0, state.element);
+          delete this.history.at(-1).element;
+          break;
+        case "clear":
+          this.clear();
+          break;
+        case "change":
+          for (const key in state.changes) {
+            const change = state.changes[key];
+            this.elements[state.index].properties[key] = change.new;
+          }
+          break;
+      }
+
+      this.render();
       this.storeElements();
     }
   }
 
   clear() {
+    this.history.push({
+      operation: "clear",
+      elements: [...this.elements],
+    });
+
+    this.redoStack = [];
     this.elements = [];
-    this.undoneElements = [];
 
     this.render();
     this.storeElements();
