@@ -24,7 +24,7 @@ export class PencilTool extends Tool {
           label: "Stroke Width:",
           type: "range",
           id: "strokeWidth",
-          min: 0,
+          min: 1,
           max: 10,
           value: this.state.strokeWidth,
         },

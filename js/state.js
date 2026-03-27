@@ -5,7 +5,14 @@ import { CircleElement } from "./elements/circle.js";
 import { EllipseElement } from "./elements/ellipse.js";
 import { TextElement } from "./elements/text.js";
 import { SelectTool } from "./tools/select.js";
-import { selectTool } from "../components/toolbar/toolbar.js";
+import { PencilTool } from "./tools/pencil.js";
+import { RectangleTool } from "./tools/rectangle.js";
+import { CircleTool } from "./tools/circle.js";
+import { EllipseTool } from "./tools/ellipse.js";
+import { TriangleTool } from "./tools/triangle.js";
+import { TextTool } from "./tools/text.js";
+import { EraserTool } from "./tools/eraser.js";
+import { renderSidebar } from "./sidebar.js";
 
 export class StateManager {
   constructor() {
@@ -19,6 +26,18 @@ export class StateManager {
 
     this.loadTheme();
     this.loadCanvas();
+
+    this.tools = {
+      pencil: new PencilTool(this),
+      rectangle: new RectangleTool(this),
+      circle: new CircleTool(this),
+      ellipse: new EllipseTool(this),
+      triangle: new TriangleTool(this),
+      text: new TextTool(this),
+      select: new SelectTool(this),
+      eraser: new EraserTool(this),
+    };
+    this.setTool("select");
   }
 
   bindContext(ctx) {
@@ -93,17 +112,19 @@ export class StateManager {
   }
 
   setTool(tool) {
-    if (this.currentTool?.selectedElement) {
-      this.currentTool.selectedElement.isSelected = false;
-      this.currentTool.selectedElement = null;
-      this.render();
-    }
-
     if (this.currentTool?.onDeselect) {
       this.currentTool.onDeselect();
     }
 
-    this.currentTool = tool;
+    const elem = document.querySelector(".tool.active");
+    if (elem) elem.classList.remove("active");
+
+    this.currentTool = this.tools[tool];
+    document
+      .querySelector(`.tool[data-action="${tool}"]`)
+      .classList.add("active");
+    renderSidebar(this.currentTool);
+    document.querySelector(".sidebar").classList.add("active");
 
     if (this.currentTool.onSelect) {
       this.currentTool.onSelect();
@@ -124,11 +145,7 @@ export class StateManager {
   }
 
   selectLastElement() {
-    this.currentTool = new SelectTool(this, this.elements.length - 1);
-    selectTool(
-      document.querySelector(".tool[data-action='select']"),
-      document.querySelectorAll(".tool"),
-    );
+    this.setTool("select");
     this.currentTool.select(-1);
   }
 
@@ -147,6 +164,14 @@ export class StateManager {
 
       this.render();
       this.storeElements();
+    }
+  }
+
+  removeSelected() {
+    if (this.currentTool.selectedElement) {
+      this.remove(this.currentTool.selectedElement);
+      this.currentTool.reset();
+      renderSidebar(this.currentTool);
     }
   }
 
@@ -234,7 +259,7 @@ export class StateManager {
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
     for (const element of this.elements) {
-      element.draw(this.ctx);
+      if (!element.hidden) element.draw(this.ctx);
     }
   }
 }

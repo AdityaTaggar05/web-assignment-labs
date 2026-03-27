@@ -20,12 +20,38 @@
     <link rel="stylesheet" href="components/header/header.css" />
     <link rel="stylesheet" href="components/toolbar/toolbar.css" />
     <link rel="stylesheet" href="components/sidebar/sidebar.css" />
+    <link rel="stylesheet" href="components/dialog/dialog.css" />
   </head>
   <body>
     <!-- Header -->
     <header>
       <h2>IllusTraitor</h2>
       <div class="actions">
+        <button class="btn" id="help-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            height="16"
+            width="16"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path
+              d="M9.5 9C9.5 7.5 10.5 6.5 12 6.5C13.5 6.5 14.5 7.5 14.5 9C14.5 10.5 13 11 12 12V13.5"
+            />
+            <circle
+              cx="12"
+              cy="16.5"
+              r="0.75"
+              fill="currentColor"
+              stroke="none"
+            />
+          </svg>
+        </button>
         <button class="btn" id="clear-btn">Clear</button>
         <button class="btn btn-filled" id="save-btn">Save</button>
       </div>
@@ -55,6 +81,7 @@
             />
             <path d="M4 2L4 17L8 13L11 20L13.5 19L10.5 12L16 12Z" />
           </svg>
+          <span class="hint">1</span>
         </button>
 
         <!-- Eraser Tool -->
@@ -74,6 +101,7 @@
             <line x1="7.5" y1="17.5" x2="15" y2="4.5" />
             <line x1="6" y1="20" x2="22" y2="20" />
           </svg>
+          <span class="hint">2</span>
         </button>
 
         <!-- Pencil Tool -->
@@ -93,6 +121,7 @@
             <line x1="14.5" y1="5" x2="19" y2="9.5" />
             <line x1="5.5" y1="18.5" x2="7" y2="17" />
           </svg>
+          <span class="hint">3</span>
         </button>
 
         <!-- Rectangle Tool -->
@@ -146,6 +175,7 @@
               stroke="none"
             />
           </svg>
+          <span class="hint">4</span>
         </button>
 
         <!-- Triangle Tool -->
@@ -190,6 +220,7 @@
               stroke="none"
             />
           </svg>
+          <span class="hint">5</span>
         </button>
 
         <!-- Circle Tool -->
@@ -243,6 +274,7 @@
               stroke="none"
             />
           </svg>
+          <span class="hint">6</span>
         </button>
 
         <!-- Ellipse Tool -->
@@ -296,6 +328,7 @@
               stroke="none"
             />
           </svg>
+          <span class="hint">7</span>
         </button>
 
         <!-- Text Tool -->
@@ -317,6 +350,7 @@
             <line x1="12" y1="5" x2="12" y2="20" />
             <line x1="9" y1="20" x2="15" y2="20" />
           </svg>
+          <span class="hint">8</span>
         </button>
         <div class="spacer"></div>
 
@@ -438,9 +472,71 @@
           </div>
         </div>
       </div>
+
+      <div id="help-dialog" class="active">
+        <button class="btn" id="close-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+
+        <h2>Welcome to IllusTraitor!</h2>
+        <div class="keybinds-container">
+          <div class="keybind">
+            <div class="btn">Ctrl/Cmd</div>
+            <span>+</span>
+            <div class="btn">Z</div>
+            <span>| Undo</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">Ctrl/Cmd</div>
+            <span>+</span>
+            <div class="btn">Y</div>
+            <span>| Redo</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">1-8</div>
+            <span>| Tool Selection</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">Delete</div>
+            <span>| Remove Selected Element</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">Ctrl/Cmd</div>
+            <span>+</span>
+            <div class="btn">Delete</div>
+            <span>| Clear Canvas</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">Ctrl/Cmd</div>
+            <span>+</span>
+            <div class="btn">S</div>
+            <span>| Save as PNG</span>
+          </div>
+          <div class="keybind">
+            <div class="btn">Ctrl/Cmd</div>
+            <span>+</span>
+            <div class="btn">H</div>
+            <span>| Help</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="components/sidebar/sidebar.js"></script>
+    <script src="components/dialog/dialog.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

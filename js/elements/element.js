@@ -2,6 +2,7 @@ export class Element {
   constructor(properties) {
     this.properties = properties;
     this.isSelected = false;
+    this.hidden = false;
   }
 
   draw(ctx) { }
