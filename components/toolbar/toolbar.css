@@ -65,6 +65,10 @@
     border-width: 0 2px 3px 1px;
   }
 
+  .tool .hint {
+    display: none;
+  }
+
   .spacer {
     border-right: 2px solid var(--outline);
   }

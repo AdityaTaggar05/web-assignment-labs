@@ -27,6 +27,12 @@ export function setupKeybinds(stateManager) {
       stateManager.redo();
     }
 
+    // Ctrl/Command + H
+    if ((e.ctrlKey || e.metaKey) && e.code === "KeyH") {
+      e.preventDefault();
+      document.querySelector("#help-btn").dispatchEvent(new Event("click"));
+    }
+
     // Backspace / Del
     if (
       (e.code === "Backspace" || e.code === "Delete") &&
