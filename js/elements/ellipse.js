@@ -22,6 +22,55 @@ export class EllipseElement extends Element {
     };
   }
 
+  resize(handle, dx, dy) {
+    let { x: bx, y: by, w: bw, h: bh } = this.getBounds();
+
+    if (handle === "tl") {
+      bx += dx;
+      by += dy;
+      bw -= dx;
+      bh -= dy;
+    }
+    if (handle === "tm") {
+      by += dy;
+      bh -= dy;
+    }
+    if (handle === "tr") {
+      by += dy;
+      bw += dx;
+      bh -= dy;
+    }
+    if (handle === "ml") {
+      bx += dx;
+      bw -= dx;
+    }
+    if (handle === "mr") {
+      bw += dx;
+    }
+    if (handle === "bl") {
+      bx += dx;
+      bw -= dx;
+      bh += dy;
+    }
+    if (handle === "bm") {
+      bh += dy;
+    }
+    if (handle === "br") {
+      bw += dx;
+      bh += dy;
+    }
+
+    const MIN = 4;
+    bw = Math.max(bw, MIN);
+    bh = Math.max(bh, MIN);
+
+    // Derive new center and radii from the updated bounding box
+    this.properties.x = bx + bw / 2;
+    this.properties.y = by + bh / 2;
+    this.properties.radiusX = bw / 2;
+    this.properties.radiusY = bh / 2;
+  }
+
   translate(dx, dy) {
     this.properties.x += dx;
     this.properties.y += dy;

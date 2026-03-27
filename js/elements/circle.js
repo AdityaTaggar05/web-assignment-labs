@@ -27,6 +27,80 @@ export class CircleElement extends Element {
     this.properties.y += dy;
   }
 
+  resize(handle, dx, dy) {
+    const p = this.properties;
+
+    // Work in bounding box space, then convert back to cx/cy/radius
+    let { x: bx, y: by, w: bw, h: bh } = this.getBounds();
+
+    if (handle === "tl") {
+      bx += dx;
+      by += dy;
+      bw -= dx;
+      bh -= dy;
+    }
+    if (handle === "tm") {
+      by += dy;
+      bh -= dy;
+    }
+    if (handle === "tr") {
+      by += dy;
+      bw += dx;
+      bh -= dy;
+    }
+    if (handle === "ml") {
+      bx += dx;
+      bw -= dx;
+    }
+    if (handle === "mr") {
+      bw += dx;
+    }
+    if (handle === "bl") {
+      bx += dx;
+      bw -= dx;
+      bh += dy;
+    }
+    if (handle === "bm") {
+      bh += dy;
+    }
+    if (handle === "br") {
+      bw += dx;
+      bh += dy;
+    }
+
+    const MIN = 4;
+    bw = Math.max(bw, MIN);
+    bh = Math.max(bh, MIN);
+    const newRadius = Math.max(bw, bh) / 2;
+
+    // For corner handles, anchor is the opposite corner
+    if (handle === "tl") {
+      p.x = bx + bw - newRadius;
+      p.y = by + bh - newRadius;
+    } else if (handle === "tr") {
+      p.x = bx + newRadius;
+      p.y = by + bh - newRadius;
+    } else if (handle === "bl") {
+      p.x = bx + bw - newRadius;
+      p.y = by + newRadius;
+    } else if (handle === "br") {
+      p.x = bx + newRadius;
+      p.y = by + newRadius;
+    }
+    // For edge handles, move center along one axis only
+    else if (handle === "tm") {
+      p.y = by + bh - newRadius;
+    } else if (handle === "bm") {
+      p.y = by + newRadius;
+    } else if (handle === "ml") {
+      p.x = bx + bw - newRadius;
+    } else if (handle === "mr") {
+      p.x = bx + newRadius;
+    }
+
+    p.radius = newRadius;
+  }
+
   draw(ctx) {
     ctx.beginPath();
 

@@ -75,6 +75,11 @@ export class TextTool extends Tool {
         this.stateManager.selectLastElement();
       } else {
         this.editing.hidden = false;
+
+        const metrics = ctx.measureText(value);
+        if (this.editing.properties.width < metrics.width)
+          this.editing.properties.width = metrics.width;
+
         this.stateManager.render();
       }
 

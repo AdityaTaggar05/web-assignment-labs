@@ -28,11 +28,78 @@ export class TriangleElement extends Element {
     return u >= 0 && v >= 0 && u + v < 1;
   }
 
+  getBounds() {
+    const xs = this.properties.path.map((p) => p[0]);
+    const ys = this.properties.path.map((p) => p[1]);
+    const minX = Math.min(...xs),
+      maxX = Math.max(...xs);
+    const minY = Math.min(...ys),
+      maxY = Math.max(...ys);
+    return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+  }
+
   translate(dx, dy) {
     for (let i = 0; i < this.properties.path.length; i++) {
       this.properties.path[i][0] += dx;
       this.properties.path[i][1] += dy;
     }
+  }
+
+  resize(handle, dx, dy) {
+    const b = this.getBounds();
+    const MIN = 4;
+
+    let newX = b.x,
+      newY = b.y,
+      newW = b.w,
+      newH = b.h;
+
+    if (handle === "tl") {
+      newX += dx;
+      newY += dy;
+      newW -= dx;
+      newH -= dy;
+    }
+    if (handle === "tm") {
+      newY += dy;
+      newH -= dy;
+    }
+    if (handle === "tr") {
+      newY += dy;
+      newW += dx;
+      newH -= dy;
+    }
+    if (handle === "ml") {
+      newX += dx;
+      newW -= dx;
+    }
+    if (handle === "mr") {
+      newW += dx;
+    }
+    if (handle === "bl") {
+      newX += dx;
+      newW -= dx;
+      newH += dy;
+    }
+    if (handle === "bm") {
+      newH += dy;
+    }
+    if (handle === "br") {
+      newW += dx;
+      newH += dy;
+    }
+
+    newW = Math.max(newW, MIN);
+    newH = Math.max(newH, MIN);
+
+    // Scale each vertex from the old bounding box origin into the new one.
+    const scaleX = b.w > 0 ? newW / b.w : 1;
+    const scaleY = b.h > 0 ? newH / b.h : 1;
+
+    this.properties.path = this.properties.path.map(([px, py]) => [
+      newX + (px - b.x) * scaleX,
+      newY + (py - b.y) * scaleY,
+    ]);
   }
 
   draw(ctx) {
@@ -51,33 +118,5 @@ export class TriangleElement extends Element {
     ctx.stroke();
 
     if (this.properties.fill) ctx.fill();
-
-    if (this.isSelected) {
-      const minX = Math.min(
-        this.properties.path[0][0],
-        this.properties.path[1][0],
-        this.properties.path[2][0],
-      );
-      const maxX = Math.max(
-        this.properties.path[0][0],
-        this.properties.path[1][0],
-        this.properties.path[2][0],
-      );
-      const minY = Math.min(
-        this.properties.path[0][1],
-        this.properties.path[1][1],
-        this.properties.path[2][1],
-      );
-      const maxY = Math.max(
-        this.properties.path[0][1],
-        this.properties.path[1][1],
-        this.properties.path[2][1],
-      );
-
-      ctx.setLineDash([2, 4]);
-      ctx.lineWidth = 1;
-      ctx.strokeRect(minX, minY, maxX - minX, maxY - minY);
-      ctx.setLineDash([0, 0]);
-    }
   }
 }
