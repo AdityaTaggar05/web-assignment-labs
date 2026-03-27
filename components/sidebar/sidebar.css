@@ -67,7 +67,7 @@
 
 .sidebar .theme-toggle {
   /* Sizing */
-  width: 5vw;
+  width: clamp(50px, 5vw, 100px);
 
   /* UI */
   background: var(--background);
