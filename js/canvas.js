@@ -27,10 +27,12 @@ export function setupCanvas(canvas, stateManager) {
   });
 
   canvas.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
     stateManager.currentTool?.onMouseDown(e, ctx);
   });
 
   canvas.addEventListener("pointermove", (e) => {
+    e.preventDefault();
     const tool = stateManager.currentTool;
     if (tool?.selectedElement) {
       const b = tool.selectedElement.getBounds?.();
@@ -61,6 +63,7 @@ export function setupCanvas(canvas, stateManager) {
   });
 
   canvas.addEventListener("pointerup", (e) => {
+    e.preventDefault();
     stateManager.currentTool?.onMouseUp(e, ctx);
   });
 
