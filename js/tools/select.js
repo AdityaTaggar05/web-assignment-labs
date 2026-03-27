@@ -9,12 +9,9 @@ import { renderSidebar } from "../sidebar.js";
 
 export class SelectTool extends Tool {
   constructor(stateManager) {
-    super(
-      {
-        selectedElement: null,
-      },
-      stateManager,
-    );
+    super({}, stateManager);
+    this.selectedElement = null;
+    this.selectedIndex = null;
   }
 
   getSidebarOptions() {
@@ -29,24 +26,48 @@ export class SelectTool extends Tool {
       this.selectedElement &&
       !this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
     ) {
+      let changes = {};
+
+      for (const key in this.selectedElement.properties) {
+        if (this.lastProperties[key] !== this.selectedElement.properties[key]) {
+          changes[key] = {
+            old: this.lastProperties[key],
+            new: this.selectedElement.properties[key],
+          };
+        }
+      }
+
       this.selectedElement.isSelected = false;
       this.selectedElement = null;
       this.stateManager.render();
       renderSidebar(this);
-      this.stateManager.storeElements();
+
+      if (Object.keys(changes).length > 0) {
+        this.stateManager.history.push({
+          operation: "change",
+          index: this.selectedIndex,
+          changes: changes,
+        });
+        this.stateManager.storeElements();
+      }
+      this.selectedIndex = null;
     }
 
     this.mouseDown = true;
-    for (const elem of this.stateManager.elements.toReversed()) {
+    for (let i = this.stateManager.elements.length - 1; i >= 0; i--) {
+      const elem = this.stateManager.elements[i];
       if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
-        this.select(elem);
+        this.select(i);
       }
     }
   }
 
-  select(elem) {
-    this.selectedElement = elem;
-    elem.isSelected = true;
+  select(index) {
+    this.selectedElement = this.stateManager.elements.at(index);
+    this.selectedIndex = index;
+    this.selectedElement.isSelected = true;
+
+    this.lastProperties = { ...this.selectedElement.properties };
 
     this.stateManager.render();
 

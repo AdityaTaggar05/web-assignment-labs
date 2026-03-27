@@ -124,12 +124,12 @@ export class StateManager {
   }
 
   selectLastElement() {
-    this.currentTool = new SelectTool(this);
+    this.currentTool = new SelectTool(this, this.elements.length - 1);
     selectTool(
       document.querySelector(".tool[data-action='select']"),
       document.querySelectorAll(".tool"),
     );
-    this.currentTool.select(this.elements.at(-1));
+    this.currentTool.select(-1);
   }
 
   remove(element) {
@@ -167,6 +167,12 @@ export class StateManager {
           this.elements = [...state.elements];
           delete this.redoStack.at(-1).elements;
           break;
+        case "change":
+          for (const key in state.changes) {
+            const change = state.changes[key];
+            this.elements[state.index].properties[key] = change.old;
+          }
+          break;
       }
 
       this.render();
@@ -190,6 +196,12 @@ export class StateManager {
         case "clear":
           this.clear();
           break;
+        case "change":
+          for (const key in state.changes) {
+            const change = state.changes[key];
+            this.elements[state.index].properties[key] = change.new;
+          }
+          break;
       }
 
       this.render();
@@ -202,6 +214,7 @@ export class StateManager {
       operation: "clear",
       elements: [...this.elements],
     });
+
     this.redoStack = [];
     this.elements = [];
 
