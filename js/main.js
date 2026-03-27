@@ -1,6 +1,7 @@
 import { StateManager } from "./state.js";
 import { setupCanvas } from "./canvas.js";
 import { setupToolbarEvents } from "../components/toolbar/toolbar.js";
+import { setupKeybinds } from "./keybind.js";
 
 // Setup tool manager and canvas with defaults
 const canvas = document.querySelector("canvas");
@@ -10,6 +11,9 @@ const ctx = setupCanvas(canvas, stateManager);
 // Registering Event handling
 const tools = document.querySelectorAll(".tool");
 setupToolbarEvents(tools, stateManager);
+
+// Registering Keybinds
+setupKeybinds(stateManager);
 
 document.getElementById("clear-btn").addEventListener("click", () => {
   stateManager.clear();

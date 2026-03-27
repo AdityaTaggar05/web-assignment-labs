@@ -15,6 +15,7 @@
   border-width: 0 2px 1px 0;
   padding: 8px 8px;
   cursor: pointer;
+  position: relative;
 
   /* Animation */
   transition: transform 0.2s ease;
@@ -35,6 +36,15 @@
 
   background-color: var(--on-background);
   color: var(--background);
+}
+
+.tool .hint {
+  position: absolute;
+  bottom: 0.1rem;
+  right: 0.1rem;
+  opacity: 50%;
+  font-family: var(--font-stack);
+  font-size: 0.8em;
 }
 
 .spacer {

@@ -23,6 +23,13 @@ export class SelectTool extends Tool {
     };
   }
 
+  reset() {
+    this.tool = null;
+    this.doubleClick = false;
+    this.selectedElement.isSelected = false;
+    this.selectedElement = null;
+  }
+
   onDeselect() {
     if (this.selectedElement) {
       let changes = {};
@@ -36,10 +43,7 @@ export class SelectTool extends Tool {
         }
       }
 
-      this.tool = null;
-      this.doubleClick = false;
-      this.selectedElement.isSelected = false;
-      this.selectedElement = null;
+      this.reset();
       this.stateManager.render();
       renderSidebar(this);
 
