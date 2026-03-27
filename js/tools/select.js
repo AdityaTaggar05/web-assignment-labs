@@ -10,8 +10,10 @@ import { renderSidebar } from "../sidebar.js";
 export class SelectTool extends Tool {
   constructor(stateManager) {
     super({}, stateManager);
+    this.tool = null;
     this.selectedElement = null;
     this.selectedIndex = null;
+    this.doubleClick = false;
   }
 
   getSidebarOptions() {
@@ -34,6 +36,8 @@ export class SelectTool extends Tool {
         }
       }
 
+      this.tool = null;
+      this.doubleClick = false;
       this.selectedElement.isSelected = false;
       this.selectedElement = null;
       this.stateManager.render();
@@ -52,13 +56,17 @@ export class SelectTool extends Tool {
   }
 
   onMouseDown(e, ctx) {
-    if (
-      this.selectedElement &&
-      !this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
-    )
-      this.onDeselect();
-
     this.mouseDown = true;
+    if (this.selectedElement) {
+      this.doubleClick = true;
+
+      if (!this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)) {
+        this.onDeselect();
+      } else {
+        return;
+      }
+    }
+
     for (let i = this.stateManager.elements.length - 1; i >= 0; i--) {
       const elem = this.stateManager.elements[i];
       if (elem.isTargetted(e.offsetX, e.offsetY, ctx)) {
@@ -76,47 +84,47 @@ export class SelectTool extends Tool {
 
     this.stateManager.render();
 
-    let tool = null;
+    this.tool = null;
     switch (this.selectedElement.type) {
       case "pencil":
-        tool = new PencilTool(this.stateManager, {
+        this.tool = new PencilTool(this.stateManager, {
           properties: this.selectedElement.properties,
           editing: true,
         });
         break;
       case "rectangle":
-        tool = new RectangleTool(this.stateManager, {
+        this.tool = new RectangleTool(this.stateManager, {
           properties: this.selectedElement.properties,
           editing: true,
         });
         break;
       case "circle":
-        tool = new CircleTool(this.stateManager, {
+        this.tool = new CircleTool(this.stateManager, {
           properties: this.selectedElement.properties,
           editing: true,
         });
         break;
       case "ellipse":
-        tool = new EllipseTool(this.stateManager, {
+        this.tool = new EllipseTool(this.stateManager, {
           properties: this.selectedElement.properties,
           editing: true,
         });
         break;
       case "triangle":
-        tool = new TriangleTool(this.stateManager, {
+        this.tool = new TriangleTool(this.stateManager, {
           properties: this.selectedElement.properties,
           editing: true,
         });
         break;
       case "text":
-        tool = new TextTool(this.stateManager, {
+        this.tool = new TextTool(this.stateManager, {
           properties: this.selectedElement.properties,
-          editing: true,
+          editing: this.selectedElement,
         });
         break;
     }
 
-    if (tool) renderSidebar(tool);
+    if (this.tool) renderSidebar(this.tool);
   }
 
   onMouseMove(e, ctx) {
@@ -126,6 +134,8 @@ export class SelectTool extends Tool {
 
       this.selectedElement.translate(dx, dy);
       this.stateManager.render();
+
+      if (this.doubleClick) this.doubleClick = false;
     }
 
     this.x = e.offsetX;
@@ -134,5 +144,23 @@ export class SelectTool extends Tool {
 
   onMouseUp(e, ctx) {
     this.mouseDown = false;
+
+    if (this.doubleClick) {
+      this.doubleClick = false;
+
+      if (
+        this.selectedElement.type == "text" &&
+        this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
+      ) {
+        this.selectedElement.hidden = true;
+        this.stateManager.render();
+        this.tool.createTextArea(
+          this.selectedElement.properties.x,
+          this.selectedElement.properties.y,
+          ctx,
+          { text: this.selectedElement.properties.text },
+        );
+      }
+    }
   }
 }

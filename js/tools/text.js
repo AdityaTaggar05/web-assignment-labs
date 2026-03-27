@@ -57,15 +57,22 @@ export class TextTool extends Tool {
     const value = this.input.value.trim();
 
     if (value !== "") {
-      let element = new TextElement({ ...this.state });
-      element.properties.x = x;
-      element.properties.y = y;
-      element.properties.text = value;
+      this.state.text = value;
 
-      this.stateManager.add(element);
+      if (!this.editing) {
+        let element = new TextElement({ ...this.state });
+        element.properties.x = x;
+        element.properties.y = y;
+        element.properties.text = value;
+
+        this.stateManager.add(element);
+        this.stateManager.selectLastElement();
+      } else {
+        this.editing.hidden = false;
+        this.stateManager.render();
+      }
+
       this.stateManager.storeElements();
-
-      this.stateManager.selectLastElement();
     }
 
     this.input.remove();
@@ -73,17 +80,14 @@ export class TextTool extends Tool {
     this.isDrawing = false;
   }
 
-  onMouseDown(e, ctx) {
-    if (this.isDrawing) return;
-
-    this.isDrawing = true;
-
+  createTextArea(x, y, ctx, { text } = {}) {
     const rect = ctx.canvas.getBoundingClientRect();
     const textarea = document.createElement("textarea");
 
+    if (text) textarea.value = text;
     textarea.style.position = "absolute";
-    textarea.style.left = `${e.offsetX + rect.left}px`;
-    textarea.style.top = `${e.offsetY}px`;
+    textarea.style.left = `${x + rect.left}px`;
+    textarea.style.top = `${y}px`;
     textarea.style.fontSize = `${this.state.fontSize}px`;
     textarea.style.fontFamily = this.state.fontFamily;
     textarea.style.color = this.state.color;
@@ -100,7 +104,15 @@ export class TextTool extends Tool {
     this.input = textarea;
 
     textarea.addEventListener("blur", () => {
-      this.changeText(e.offsetX, e.offsetY);
+      this.changeText(x, y);
     });
+  }
+
+  onMouseDown(e, ctx) {
+    if (this.isDrawing) return;
+
+    this.isDrawing = true;
+
+    this.createTextArea(e.offsetX, e.offsetY, ctx);
   }
 }
