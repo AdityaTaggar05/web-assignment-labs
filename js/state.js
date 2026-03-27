@@ -93,12 +93,6 @@ export class StateManager {
   }
 
   setTool(tool) {
-    if (this.currentTool?.selectedElement) {
-      this.currentTool.selectedElement.isSelected = false;
-      this.currentTool.selectedElement = null;
-      this.render();
-    }
-
     if (this.currentTool?.onDeselect) {
       this.currentTool.onDeselect();
     }

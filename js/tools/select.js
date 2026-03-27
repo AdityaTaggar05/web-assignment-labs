@@ -21,11 +21,8 @@ export class SelectTool extends Tool {
     };
   }
 
-  onMouseDown(e, ctx) {
-    if (
-      this.selectedElement &&
-      !this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
-    ) {
+  onDeselect() {
+    if (this.selectedElement) {
       let changes = {};
 
       for (const key in this.selectedElement.properties) {
@@ -52,6 +49,14 @@ export class SelectTool extends Tool {
       }
       this.selectedIndex = null;
     }
+  }
+
+  onMouseDown(e, ctx) {
+    if (
+      this.selectedElement &&
+      !this.selectedElement.isTargetted(e.offsetX, e.offsetY, ctx)
+    )
+      this.onDeselect();
 
     this.mouseDown = true;
     for (let i = this.stateManager.elements.length - 1; i >= 0; i--) {
