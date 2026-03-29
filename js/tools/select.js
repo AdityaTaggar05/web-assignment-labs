@@ -62,6 +62,8 @@ export class SelectTool extends Tool {
 
   onMouseDown(e, ctx) {
     this.mouseDown = true;
+    this.x = e.offsetX;
+    this.y = e.offsetY;
 
     if (this.selectedElement) {
       const b = this.selectedElement.getBounds();

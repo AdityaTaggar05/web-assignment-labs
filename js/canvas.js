@@ -1,5 +1,14 @@
 import { getHitHandle } from "./tools/handles.js";
 
+function _getPos(touch, canvas) {
+  const rect = canvas.getBoundingClientRect();
+
+  return {
+    offsetX: touch.clientX - rect.left,
+    offsetY: touch.clientY - rect.top,
+  };
+}
+
 export function setupCanvas(canvas, stateManager) {
   const ctx = canvas.getContext("2d");
 
@@ -27,6 +36,8 @@ export function setupCanvas(canvas, stateManager) {
   });
 
   canvas.addEventListener("pointerdown", (e) => {
+    if (!e.isPrimary) return; // ignore multi-finger touches
+    canvas.setPointerCapture(e.pointerId);
     e.preventDefault();
     stateManager.currentTool?.onMouseDown(e, ctx);
   });
@@ -59,12 +70,17 @@ export function setupCanvas(canvas, stateManager) {
       }
     }
 
-    stateManager.currentTool?.onMouseMove(e, ctx);
+    stateManager.currentTool?.onMouseMove(_getPos(e, canvas), ctx);
   });
 
   canvas.addEventListener("pointerup", (e) => {
-    e.preventDefault();
-    stateManager.currentTool?.onMouseUp(e, ctx);
+    canvas.releasePointerCapture(e.pointerId);
+    stateManager.currentTool?.onMouseUp(_getPos(e, canvas), ctx);
+  });
+
+  canvas.addEventListener("pointercancel", (e) => {
+    canvas.releasePointerCapture(e.pointerId);
+    stateManager.currentTool?.onMouseUp(_getPos(e, canvas), ctx);
   });
 
   return ctx;
